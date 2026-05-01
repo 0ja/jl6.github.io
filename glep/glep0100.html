@@ -42,9 +42,28 @@
             line-height: 1.6;
             color: #94a3b8;
         }
+
+ @keyframes marquee-rtl {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+    
+    .animate-marquee-rtl {
+        display: inline-block;
+        animation: marquee-rtl 20s linear infinite;
+    }
     </style>
 </head>
+
 <body class="text-slate-200 min-h-screen p-6 md:p-12">
+
+  <div class="w-full bg-black/40 border-b border-emerald-500/20 overflow-hidden py-1">
+    <div class="whitespace-nowrap animate-marquee-rtl">
+        <span class="text-[10px] font-black text-emerald-400 uppercase tracking-[0.5em] px-4">
+            If you don't want to have the purplehat commands please disable them by doing !toggle purplehat
+        </span>
+    </div>
+</div>
 
     <div class="max-w-6xl mx-auto">
         <header class="mb-16 text-center">
@@ -237,20 +256,7 @@
                     <code class="text-sky-400 font-bold mono text-xs">remind: Sets a reminder for the user bot will message you after the specified time.</code>
                 </div>
             </details>
-
             
-            <!-- BUGHUNTER -->
-            <details class="group glass-card p-6 rounded-3xl border-t-4 border-t-slate-600">
-                <summary class="cursor-pointer">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-bug text-slate-500 text-[10px]"></i>
-                            <h2 class="text-slate-400 text-[10px] font-black tracking-widest uppercase">BUGHUNTER</h2>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-slate-500 text-[10px] transition-transform chevron-icon"></i>
-                    </div>
-                </summary>
-            </details>
         </div>
 
 
