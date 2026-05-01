@@ -3,151 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Studio | J Projects</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>QR TOOL | J_Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Ensures the QR code has high contrast for scanning */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap');
+        
+        body { 
+            background-color: #020617; 
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+        }
+
+        .glass-card {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Navigation Tab Active State */
+        .tab-btn.active {
+            color: #10b981;
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        #drop-zone {
+            border: 2px dashed rgba(16, 185, 129, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        #drop-zone:hover { 
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
         .qr-output-card {
             background: #ffffff;
-            padding: 2.5rem;
-            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 1rem;
             display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 4px solid var(--emerald);
-        }
-
-        #statusMessage strong {
-            color: var(--emerald);
-        }
-
-        .property-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 0.75rem;
-        }
-
-        .property-list li {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .property-list li span {
-            color: var(--text-dim);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
         }
     </style>
 </head>
-<body>
-    <nav class="sidebar">
-        <div class="brand">
-            <h1>J_Projects <span style="font-size: 0.5rem; vertical-align: middle; opacity: 0.5; display: block; margin-top: 4px;">ENCODER_PROTOCOL_v2</span></h1>
-        </div>
-        
-        <ul style="list-style: none; padding: 0; margin: 30px 0 10px 0;">
-            <li>
-                <a href="../index.html" style="color: var(--text-dim); text-decoration: none; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; gap: 8px;">
-                    <span>←</span> DASHBOARD
-                </a>
-            </li>
-        </ul>
+<body class="min-h-screen p-4 md:p-8">
 
-        <div class="control-panel" style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1rem;">
+    <div class="max-w-7xl mx-auto">
+        <!-- HEADER -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
             <div>
-                <span class="label-text">Target Payload (URL/Text)</span>
-                <input 
-                    type="url" 
-                    id="urlInput" 
-                    placeholder="https://example.com" 
-                    value="https://google.com"
-                    class="dashboard-input"
-                    style="margin-top: 8px;"
-                >
+                <a href="../index.html" class="text-[10px] font-black text-emerald-500/60 uppercase tracking-[0.3em] hover:text-emerald-400 transition-colors mb-2 block">
+                    <i class="fa-solid fa-arrow-left-long mr-2"></i> Return to Dashboard
+                </a>
+                <h1 class="text-5xl font-extrabold tracking-[-0.05em] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 uppercase">
+                    QR CODE
+                </h1>
+                <p class="text-slate-400 mt-2 uppercase tracking-[0.3em] text-[10px] font-bold">QR_ENCODER // DATA_INSPECTION_PROTOCOL</p>
             </div>
         </div>
 
-        <button onclick="generateQRCode()" class="execute-btn" id="footerBtn">
-            Generate Code
-        </button>
-        
-        <div style="margin-top: auto; padding-bottom: 1rem;">
-            <p style="font-size: 0.6rem; color: #334155; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em;">Encoder: Ready</p>
-        </div>
-    </nav>
+        <!-- MAIN UTILITY GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- LEFT COLUMN: CONTROLS -->
+            <div class="lg:col-span-4 space-y-6">
+                <!-- Tab Selector -->
+                <div class="glass-card p-2 rounded-2xl flex gap-2">
+                    <button onclick="switchTab('encoder')" id="tab-encoder" class="tab-btn active flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">
+                        Encoder
+                    </button>
+                    <button onclick="switchTab('decoder')" id="tab-decoder" class="tab-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-500 transition-all">
+                        Decoder
+                    </button>
+                </div>
 
-    <main class="main-content">
-        <header style="margin-bottom: 3rem;">
-            <h2 style="text-transform: uppercase; letter-spacing: 0.2em; color: #10b981; font-weight: 800;">QR Code Studio</h2>
-            <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.5rem;">Generate high-resolution matrix barcodes for rapid data transmission and secure links.</p>
-        </header>
+                <!-- Encoder Controls -->
+                <div id="controls-encoder" class="glass-card p-6 rounded-3xl border-t-2 border-emerald-500/50">
+                    <label class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-4 italic">LINK</label>
+                    <input type="url" id="urlInput" placeholder="https://..." value="https://google.com" 
+                           class="w-full bg-black/60 border border-emerald-500/20 rounded-xl px-4 py-4 text-xs mono text-emerald-400 focus:outline-none focus:border-emerald-500/50 mb-4">
+                    
+                    <button onclick="generateQRCode()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-4 rounded-xl text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-emerald-900/20">
+                        Generate QR Code
+                    </button>
 
-        <div class="webhook-grid">
-            <div class="data-card" style="display: flex; justify-content: center; align-items: center; padding: 3rem;">
-                <div class="qr-output-card">
-                    <div id="qrcode"></div>
+                    <div class="mt-6 pt-6 border-t border-slate-800">
+                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Properties:</span>
+                        <ul class="text-[9px] mono text-slate-400 space-y-2">
+                            <li class="flex justify-between"><span>ECC_LEVEL:</span> <span class="text-emerald-500">High (H)</span></li>
+                            <li class="flex justify-between"><span>FORMAT:</span> <span class="text-emerald-500">Vector/PNG</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Decoder Controls (Hidden by default) -->
+                <div id="controls-decoder" class="hidden glass-card p-6 rounded-3xl border-t-2 border-cyan-500/50">
+                    <label class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest block mb-4 italic">//UPLOAD </label>
+                    <p class="text-[10px] text-slate-500 leading-relaxed mb-6 italic">
+                        Upload a QR code image for local client-side analysis. No data is transmitted to external servers.
+                    </p>
+                    <div id="drop-zone" onclick="document.getElementById('file-input').click()" class="rounded-2xl p-10 text-center cursor-pointer group">
+                        <i class="fa-solid fa-expand text-2xl text-slate-700 group-hover:text-cyan-400 mb-3 transition-colors"></i>
+                        <p class="text-slate-500 text-[9px] font-black tracking-widest uppercase">Select Image</p>
+                        <input type="file" id="file-input" hidden accept="image/*">
+                    </div>
                 </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                <div class="data-card">
-                    <span class="label-text">System Status</span>
-                    <p id="statusMessage" style="font-size: 0.85rem; line-height: 1.6; margin-top: 5px; color: var(--text-dim);">Ready to initialize encoding protocol.</p>
-                </div>
+            <!-- RIGHT COLUMN: OUTPUT -->
+            <div class="lg:col-span-8">
+                <div class="glass-card rounded-3xl p-8 md:p-16 flex flex-col items-center justify-center min-h-[500px] border-b-4 border-emerald-500/20 relative overflow-hidden">
+                    <!-- Subtle background grid effect -->
+                    <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#10b981 1px, transparent 1px); background-size: 20px 20px;"></div>
+                    
+                    <div id="encoder-output" class="relative z-10 flex flex-col items-center">
+                        <div class="qr-output-card">
+                            <div id="qrcode"></div>
+                        </div>
+                        <p id="statusMessage" class="mt-8 mono text-[10px] text-emerald-500/70 tracking-widest uppercase">System Ready</p>
+                    </div>
 
-                <div class="data-card">
-                    <span class="label-text">Matrix Properties</span>
-                    <ul class="property-list">
-                        <li><span>FORMAT</span> <strong>PNG / VECTOR</strong></li>
-                        <li><span>ECC_LEVEL</span> <strong>HIGH (H)</strong></li>
-                        <li><span>RESOLUTION</span> <strong>250x250 PX</strong></li>
-                        <li><span>CONTRAST</span> <strong>OPTIMIZED</strong></li>
-                    </ul>
+                    <div id="decoder-output" class="hidden relative z-10 w-full">
+                        <div id="result-area" class="w-full max-w-2xl mx-auto p-8 rounded-2xl border bg-black/60 hidden"></div>
+                        <div id="placeholder-decoder" class="text-center text-slate-700">
+                            <i class="fa-solid fa-鋪 text-6xl mb-4 opacity-20"></i>
+                            <p class="text-[10px] font-bold uppercase tracking-widest">Waiting for Input...</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </div>   
+    </div>
 
-        <footer style="margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); color: #334155; font-size: 0.7rem; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase;">
-            J Projects // Encoding Utility // 2026_STABLE
-        </footer>
-    </main>
+    <canvas id="canvas" class="hidden"></canvas>
 
     <script>
+        function switchTab(tab) {
+            const encoderCtrl = document.getElementById('controls-encoder');
+            const decoderCtrl = document.getElementById('controls-decoder');
+            const encoderOut = document.getElementById('encoder-output');
+            const decoderOut = document.getElementById('decoder-output');
+            const encoderBtn = document.getElementById('tab-encoder');
+            const decoderBtn = document.getElementById('tab-decoder');
+
+            if (tab === 'encoder') {
+                encoderCtrl.classList.remove('hidden');
+                decoderCtrl.classList.add('hidden');
+                encoderOut.classList.remove('hidden');
+                decoderOut.classList.add('hidden');
+                encoderBtn.classList.add('active');
+                decoderBtn.classList.remove('active');
+            } else {
+                encoderCtrl.classList.add('hidden');
+                decoderCtrl.classList.remove('hidden');
+                encoderOut.classList.add('hidden');
+                decoderOut.classList.remove('hidden');
+                decoderBtn.classList.add('active');
+                encoderBtn.classList.remove('active');
+            }
+        }
+
+        // Encoder Logic
         function generateQRCode() {
             const urlInput = document.getElementById('urlInput');
             const qrcodeContainer = document.getElementById('qrcode');
             const statusMessage = document.getElementById('statusMessage');
-            
             const url = urlInput.value.trim() || 'https://google.com';
 
             qrcodeContainer.innerHTML = '';
-            statusMessage.innerHTML = `Encoding Payload: <br><strong>${url.length > 30 ? url.substring(0, 30) + '...' : url}</strong>`;
+            statusMessage.innerHTML = `PROTOCOL: <span class="text-white">ENCODING_PAYLOAD...</span>`;
             
-            try {
+            setTimeout(() => {
                 new QRCode(qrcodeContainer, {
                     text: url,
-                    width: 250,
-                    height: 250,
-                    colorDark : "#0d0d0d", 
+                    width: 220,
+                    height: 220,
+                    colorDark : "#020617",
                     colorLight : "#ffffff",
                     correctLevel : QRCode.CorrectLevel.H
                 });
-            } catch (error) {
-                statusMessage.innerHTML = '<span style="color: #ef4444;">ERROR: BUFFER OVERFLOW - Payload too large.</span>';
-            }
+                statusMessage.innerHTML = `STATUS: <span class="text-emerald-400">ENCODED_SUCCESS</span>`;
+            }, 300);
         }
 
-        // Generate on Enter key
-        document.getElementById('urlInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') generateQRCode();
+        // Decoder Logic
+        const fileInput = document.getElementById('file-input');
+        const resultArea = document.getElementById('result-area');
+        const placeholder = document.getElementById('placeholder-decoder');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        fileInput.addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+                    resultArea.classList.remove('hidden');
+                    placeholder.classList.add('hidden');
+                    
+                    if (code) {
+                        resultArea.className = 'w-full max-w-2xl mx-auto p-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 animate-pulse';
+                        resultArea.innerHTML = `
+                            <div class="text-emerald-400 text-[10px] font-black tracking-widest uppercase mb-4 italic">// Matrix_Decoded_Result:</div>
+                            <div class="mono text-lg text-white break-all bg-black/40 p-4 rounded-xl border border-white/5">${code.data}</div>
+                        `;
+                    } else {
+                        resultArea.className = 'w-full max-w-2xl mx-auto p-8 rounded-2xl border border-red-500/30 bg-red-500/5';
+                        resultArea.innerHTML = `<div class="text-red-400 text-[10px] font-black tracking-widest uppercase">❌ No Matrix Detected in Archive</div>`;
+                    }
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
         });
 
-        // Initial generation
         window.onload = generateQRCode;
     </script>
 </body>
