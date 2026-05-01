@@ -43,24 +43,31 @@
             color: #94a3b8;
         }
 
- @keyframes marquee-rtl {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
+    @keyframes marquee-rtl {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
     }
     
     .animate-marquee-rtl {
-        display: inline-block;
-        animation: marquee-rtl 20s linear infinite;
+        display: flex;
+        width: max-content;
+        animation: marquee-rtl 30s linear infinite;
     }
     </style>
 </head>
 
 <body class="text-slate-200 min-h-screen p-6 md:p-12">
 
-  <div class="w-full bg-black/40 border-b border-emerald-500/20 overflow-hidden py-1">
-    <div class="whitespace-nowrap animate-marquee-rtl">
-        <span class="text-[10px] font-black text-emerald-400 uppercase tracking-[0.5em] px-4">
-            If you don't want to have the purplehat commands please disable them by doing !toggle purplehat
+<div class="w-full bg-amber-400/10 border-y border-amber-500/20 overflow-hidden py-2 backdrop-blur-sm">
+    <div class="whitespace-nowrap animate-marquee-rtl flex items-center">
+        <span class="text-[10px] font-bold text-amber-500 uppercase tracking-widest px-4 flex items-center gap-2">
+            <i class="fa-solid fa-circle-exclamation text-[8px]"></i>
+            REMINDER: If you don't want to have the purplehat commands please disable them in your server settings by doing !toggle purplehat
+        </span>
+        <!-- Duplicated for seamless loop -->
+        <span class="text-[10px] font-bold text-amber-500 uppercase tracking-widest px-4 flex items-center gap-2">
+            <i class="fa-solid fa-circle-exclamation text-[8px]"></i>
+            REMINDER: If you don't want to have the purplehat commands please disable them in your server settings by doing !toggle purplehat
         </span>
     </div>
 </div>
