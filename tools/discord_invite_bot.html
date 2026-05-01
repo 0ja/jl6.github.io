@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINK GEN | J_Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap');
+        
+        body { 
+            background-color: #020617; 
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+        }
+
+        .glass-card {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
+
+        .perm-item {
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        
+        .perm-item:hover {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        input[type="checkbox"] {
+            accent-color: #10b981;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- HEADER -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+            <div>
+                <a href="../index.html" class="text-[10px] font-black text-emerald-500/60 uppercase tracking-[0.3em] hover:text-emerald-400 transition-colors mb-2 block">
+                    <i class="fa-solid fa-arrow-left-long mr-2"></i> Return to Dashboard
+                </a>
+                <h1 class="text-5xl font-extrabold tracking-[-0.05em] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 uppercase">
+                   DISCORD BOT LINK GEN
+                </h1>
+            </div>
+        </div>
+
+        <!-- MAIN UTILITY GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- LEFT COLUMN: CONTROLS -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="glass-card p-6 rounded-3xl border-t-2 border-emerald-500/50">
+                    <label class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-4 italic">APPLICATION_ID</label>
+                    <input type="text" id="clientId" placeholder="PASTE_CLIENT_ID_HERE" oninput="updateLink()"
+                           class="w-full bg-black/60 border border-emerald-500/20 rounded-xl px-4 py-4 text-xs mono text-emerald-400 focus:outline-none focus:border-emerald-500/50 mb-4">
+                    
+                    <div class="pt-6 border-t border-slate-800">
+                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Scope Metadata:</span>
+                        <ul class="text-[9px] mono text-slate-400 space-y-2">
+                            <li class="flex justify-between"><span>TYPE:</span> <span class="text-emerald-500">BOT</span></li>
+                            <li class="flex justify-between"><span>INTEGRATION:</span> <span class="text-emerald-500">SLASH_COMMANDS</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="flex items-center gap-3 text-amber-500 mb-2">
+                        <i class="fa-solid fa-triangle-exclamation text-xs"></i>
+                        <span class="text-[10px] font-black uppercase tracking-widest">System Note</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 leading-relaxed italic">
+                        Selecting "Administrator" overrides all other permissions. Use with caution for public deployments.
+                    </p>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: PERMISSIONS & OUTPUT -->
+            <div class="lg:col-span-8 space-y-6">
+                <!-- Permissions Matrix -->
+                <div class="glass-card rounded-3xl p-6 border-b-2 border-white/5">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] block mb-6 px-2 italic">// PERMISSION_MATRIX</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2" id="permList">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Result Area -->
+                <div class="glass-card rounded-3xl p-8 border-b-4 border-emerald-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#10b981 1px, transparent 1px); background-size: 20px 20px;"></div>
+                    
+                    <div class="relative z-10 w-full">
+                        <div class="text-emerald-400 text-[10px] font-black tracking-widest uppercase mb-4 italic text-center">// Generated_Payload:</div>
+                        
+                        <div id="finalUrl" class="mono text-xs text-white break-all bg-black/60 p-6 rounded-xl border border-emerald-500/20 text-center min-h-[60px] flex items-center justify-center">
+                            Awaiting Application ID...
+                        </div>
+
+                        <div class="mt-6 flex justify-center">
+                            <button onclick="copyUrl()" class="px-12 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-xl text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-emerald-900/20">
+                                Copy Invitation Link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+
+    <script>
+        const permissions = [
+            { name: "Administrator", value: 0x8 },
+            { name: "Manage Server", value: 0x20 },
+            { name: "Manage Roles", value: 0x10000000 },
+            { name: "Manage Channels", value: 0x10 },
+            { name: "Kick Members", value: 0x2 },
+            { name: "Ban Members", value: 0x4 },
+            { name: "Create Invite", value: 0x1 },
+            { name: "Send Messages", value: 0x800 },
+            { name: "Embed Links", value: 0x4000 },
+            { name: "Attach Files", value: 0x8000 },
+            { name: "Message History", value: 0x10000 },
+            { name: "Use Emojis", value: 0x40000 },
+            { name: "Add Reactions", value: 0x40 },
+            { name: "Connect Voice", value: 0x100000 },
+            { name: "Speak Voice", value: 0x200000 }
+        ];
+
+        const permListContainer = document.getElementById('permList');
+        
+        permissions.forEach(p => {
+            const div = document.createElement('label');
+            div.className = 'perm-item flex items-center gap-3 p-3 rounded-xl cursor-pointer group';
+            div.innerHTML = `
+                <input type="checkbox" value="${p.value}" onchange="updateLink()" class="w-4 h-4">
+                <span class="text-[10px] font-bold text-slate-400 group-hover:text-emerald-400 uppercase tracking-tighter transition-colors">${p.name}</span>
+            `;
+            permListContainer.appendChild(div);
+        });
+
+        function updateLink() {
+            const clientId = document.getElementById('clientId').value.trim();
+            const display = document.getElementById('finalUrl');
+            
+            if (!clientId) {
+                display.innerText = "Awaiting Application ID...";
+                display.classList.add('text-slate-500');
+                return;
+            }
+
+            display.classList.remove('text-slate-500');
+            let totalPerms = 0n; 
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+                totalPerms |= BigInt(cb.value);
+            });
+
+            const url = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&permissions=${totalPerms}&scope=bot%20applications.commands`;
+            display.innerText = url;
+        }
+
+        function copyUrl() {
+            const text = document.getElementById('finalUrl').innerText;
+            if (text.startsWith('http')) {
+                navigator.clipboard.writeText(text);
+                const btn = event.currentTarget;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = 'Link Secured';
+                btn.classList.replace('bg-emerald-600', 'bg-cyan-600');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.replace('bg-cyan-600', 'bg-emerald-600');
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
