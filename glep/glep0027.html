@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glep#0027 // Command Database</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap');
+        
+        body { 
+            background-color: #020617; 
+            font-family: 'Inter', sans-serif;
+            background-image: radial-gradient(circle at 50% -20%, #1e1b4b 0%, #020617 100%);
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glep-glow { text-shadow: 0 0 15px rgba(52, 211, 153, 0.4); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+</head>
+<body class="text-slate-200 min-h-screen p-6 md:p-12">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- BRANDING HEADER -->
+        <header class="mb-16 text-center">
+            <div class="inline-block bg-emerald-500/10 border border-emerald-500/20 px-4 py-1 rounded-full mb-4">
+                <span class="text-emerald-400 text-[10px] font-black tracking-[0.3em] uppercase">Verified Discord Bot</span>
+            </div>
+            <h1 class="text-6xl font-black text-white tracking-tight mb-2">
+                Glep<span class="text-emerald-400 glep-glow">#0027</span>
+            </h1>
+            <p class="text-slate-400 font-medium tracking-wide">Official Command Reference Database</p>
+        </header>
+
+        <!-- CATEGORY GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- SMILINGFRIENDS -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-pink-500">
+                <h2 class="text-pink-500 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-star"></i> SMILINGFRIENDS
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <code class="text-pink-400 font-bold mono text-xs">/glep</code>
+                    <p class="text-[10px] text-slate-400 mt-1 italic">Interactions and quotes from the show.</p>
+                </div>
+            </div>
+
+            <!-- ECONOMY -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-emerald-500">
+                <h2 class="text-emerald-500 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-coins"></i> ECONOMY
+                </h2>
+                <div class="space-y-3">
+                    <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                        <code class="text-emerald-400 font-bold mono text-xs">/balance</code>
+                        <p class="text-[10px] text-slate-400 mt-1 italic">View your current wallet and bank totals.</p>
+                    </div>
+                    <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                        <code class="text-emerald-400 font-bold mono text-xs">/work</code>
+                        <p class="text-[10px] text-slate-400 mt-1 italic">Earn currency through various tasks.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADMIN -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-red-500">
+                <h2 class="text-red-500 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved"></i> ADMIN
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <code class="text-red-400 font-bold mono text-[10px]">!airdrop / !eco-stats / !wipeall</code>
+                    <p class="text-[9px] text-slate-500 mt-1 italic">Advanced server-wide economy management tools.</p>
+                </div>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5 mt-3">
+                    <code class="text-red-400 font-bold mono text-[10px]">!costumeset / !costumereset</code>
+                    <p class="text-[9px] text-slate-500 mt-1 italic">Manage custom server-specific commands.</p>
+                </div>
+            </div>
+
+            <!-- MODERATION -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-orange-500">
+                <h2 class="text-orange-500 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-hammer"></i> MODERATION
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <code class="text-orange-400 font-bold mono text-xs">/kick & /ban</code>
+                    <p class="text-[10px] text-slate-400 mt-1 italic">Essential tools for server safety and enforcement.</p>
+                </div>
+            </div>
+
+            <!-- PURPLEHAT -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-purple-500">
+                <h2 class="text-purple-500 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-user-secret"></i> PURPLEHAT
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <code class="text-purple-400 font-bold mono text-xs">/whois</code>
+                    <p class="text-[10px] text-slate-400 mt-1 italic">Retrieve detailed information about a specific user.</p>
+                </div>
+            </div>
+
+            <!-- TOOLS -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-sky-500">
+                <h2 class="text-sky-500 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> TOOLS
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <code class="text-sky-400 font-bold mono text-xs">/qr-gen</code>
+                    <p class="text-[10px] text-slate-400 mt-1 italic">Generate custom QR codes instantly in-chat.</p>
+                </div>
+            </div>
+
+            <!-- GAMES -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-cyan-500">
+                <h2 class="text-cyan-500 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad"></i> GAMES
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <code class="text-cyan-400 font-bold mono text-xs">/rps</code>
+                    <p class="text-[10px] text-slate-400 mt-1 italic">Classic Rock, Paper, Scissors vs Glep.</p>
+                </div>
+            </div>
+
+            <!-- USER -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-indigo-500">
+                <h2 class="text-indigo-500 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-user"></i> USER
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <code class="text-indigo-400 font-bold mono text-xs">/profile</code>
+                    <p class="text-[10px] text-slate-400 mt-1 italic">View your unique Glep#0027 user statistics.</p>
+                </div>
+            </div>
+
+            <!-- TERMS -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-slate-500">
+                <h2 class="text-slate-500 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-file-contract"></i> TERMS
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <code class="text-slate-400 font-bold mono text-xs">/tos</code>
+                    <p class="text-[10px] text-slate-400 mt-1 italic">Review the terms of service for Glep#0027.</p>
+                </div>
+            </div>
+
+            <!-- BUGHUNTER -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-slate-700 opacity-60">
+                <h2 class="text-slate-400 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-bug"></i> BUGHUNTER
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <p class="text-[10px] text-slate-500 italic">Internal reporting protocols only.</p>
+                </div>
+            </div>
+
+            <!-- DEV -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-amber-600 opacity-60">
+                <h2 class="text-amber-600 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-code"></i> DEV
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <code class="text-amber-500 font-bold mono text-xs">/test-ui</code>
+                    <p class="text-[10px] text-slate-500 mt-1 italic">Interface testing and rendering.</p>
+                </div>
+            </div>
+
+            <!-- TESTING -->
+            <div class="glass-card p-6 rounded-3xl border-t-4 border-t-amber-500 opacity-60">
+                <h2 class="text-amber-500 text-[10px] font-black tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-vial"></i> TESTING
+                </h2>
+                <div class="bg-black/20 p-3 rounded-xl border border-white/5">
+                    <code class="text-amber-400 font-bold mono text-xs">/ping-test</code>
+                    <p class="text-[10px] text-slate-500 mt-1 italic">Latency and connection verification.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-20 border-t border-white/5 pt-8 text-center">
+            <p class="text-[10px] text-slate-500 font-bold tracking-[0.4em] uppercase mb-4">Authored by J7o</p>
+            <div class="flex justify-center gap-8">
+                <a href="#" class="text-slate-500 hover:text-emerald-400 transition-all"><i class="fa-brands fa-github text-lg"></i></a>
+                <a href="#" class="text-slate-500 hover:text-emerald-400 transition-all"><i class="fa-brands fa-discord text-lg"></i></a>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
