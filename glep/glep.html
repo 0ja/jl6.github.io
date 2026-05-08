@@ -163,6 +163,59 @@
                         </div>
                     </div>
                 </details>
+
+                <!--CHANNELS-->
+                
+                <details class="group w-full md:w-72 relative">
+                    <summary class="glass-card flex items-center justify-between px-6 py-5 rounded-2xl cursor-pointer hover:bg-purple-500/10 border-b-2 border-b-purple-500/50 transition-all">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-hashtag text-purple-500 text-xs"></i>
+                            <span class="text-white text-[11px] font-black tracking-widest uppercase">Channels</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-600 text-[10px] transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    
+                    <div class="dropdown-content glass-card mt-3 p-5 rounded-2xl space-y-4 absolute z-20 w-full border border-white/10 shadow-2xl">
+                        <div class="group/item">
+                            <code class="text-purple-400 font-bold mono text-[10px] block group-hover/item:text-purple-300 transition-colors">!create</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Creates text or voice channels and logs the creation to the assigned channel.</p>
+                        </div>
+
+                        <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-purple-400 font-bold mono text-[10px] block group-hover/item:text-purple-300 transition-colors">!delete</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Deletes text or voice channels and logs the action to the assigned channel.</p>
+                        </div>
+
+                        <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-purple-400 font-bold mono text-[10px] block group-hover/item:text-purple-300 transition-colors">!lockdown</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Locks a specific channel or all user-accessible channels.</p>
+                        </div>
+
+                        <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-purple-400 font-bold mono text-[10px] block group-hover/item:text-purple-300 transition-colors">!nuke</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Deletes and recreates the current channel to wipe all history.</p>
+                        </div>
+
+                        <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-purple-400 font-bold mono text-[10px] block group-hover/item:text-purple-300 transition-colors">!purge</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Bulk deletes a specific number of messages and logs the action.</p>
+                        </div>
+
+                        <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-purple-400 font-bold mono text-[10px] block group-hover/item:text-purple-300 transition-colors">!unlockall</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Restores only the channels that were locked via the lockdown command.</p>
+                        </div>
+
+                        
+                    </div>
+                </details>
+
+
             </nav>
         </div>
 
