@@ -6,74 +6,176 @@
     <title>Glep#0100 | Official Documentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap');
-        
-        body { 
-            background-color: #020617; 
-            font-family: 'Inter', sans-serif;
-            background-image: radial-gradient(circle at 50% -20%, #1e1b4b 0%, #020617 100%);
-            background-attachment: fixed;
-            overflow-x: hidden;
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap');
+    
+    /* 1. Core Environment */
+    body { 
+        background-color: #020617; 
+        font-family: 'Inter', sans-serif;
+        background-image: radial-gradient(circle at 50% -20%, #1e1b4b 0%, #020617 100%);
+        background-attachment: fixed;
+        overflow-x: hidden;
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .glep-glow { text-shadow: 0 0 20px rgba(52, 211, 153, 0.4); }
+
+    /* 2. Global Navigation Grid */
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+        padding: 4rem 2rem;
+    }
+
+    /* 3. Standard Card Styling */
+    .glass-card {
+        background: rgba(30, 41, 59, 0.4);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    summary { list-style: none; outline: none; user-select: none; cursor: pointer; }
+    summary::-webkit-details-marker { display:none; }
+
+    /* 4. Full-Page Takeover (The "Cramped" Fix) */
+    details.is-fullscreen .dropdown-content {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9999;
+        margin: 0;
+        border-radius: 0;
+        background: rgba(2, 6, 23, 0.98);
+        backdrop-filter: blur(25px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 8vh 5vw;
+        overflow-y: auto;
+        border: none;
+        cursor: zoom-out; /* Signals click to close */
+    }
+
+    /* Command Container */
+    .dropdown-content .grid-container {
+        max-width: 900px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-top: 2rem;
+        cursor: default; /* Keeps internal clicks feeling normal */
+    }
+
+    /* Individual Command Cards */
+    .group\/item {
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.2s ease;
+    }
+
+    /* Deskstop Hover Interaction */
+    @media (hover: hover) {
+        .group\/item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(8px);
+        }
+    }
+
+    /* Touch-Screen Tap Interaction */
+    .group\/item:active {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* 5. Example Box Styling */
+    .cmd-example {
+        display: block;
+        margin-top: 1.25rem;
+        padding: 1rem 1.25rem;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        border-left: 2px solid currentColor;
+        font-size: 12px;
+        color: #94a3b8;
+        line-height: 1.5;
+    }
+
+    /* 6. Animations */
+    @keyframes fullPageReveal {
+        0% { opacity: 0; transform: scale(1.05); filter: blur(10px); }
+        100% { opacity: 1; transform: scale(1); filter: blur(0); }
+    }
+
+    details[open].is-fullscreen .dropdown-content {
+        animation: fullPageReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* 7. Close Hint / Button */
+    details.is-fullscreen .dropdown-content::after {
+        content: "✕ CLOSE";
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        padding: 0.8rem 1.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50px;
+        color: rgba(255, 255, 255, 0.6);
+        font-family: 'JetBrains Mono';
+        font-size: 11px;
+        letter-spacing: 2px;
+        pointer-events: none; /* Let the click pass to the overlay */
+    }
+
+    /* 8. Responsive Design (Mobile/Tablet) */
+    @media (max-width: 768px) {
+        details.is-fullscreen .dropdown-content {
+            padding: 4vh 6vw;
         }
 
-        .glass-card {
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .dropdown-content .grid-container {
+            gap: 1.25rem;
+            padding-bottom: 120px; /* Space for the bottom button */
         }
 
-        .glep-glow { text-shadow: 0 0 20px rgba(52, 211, 153, 0.6); }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        
-        summary { list-style: none; outline: none; }
-        summary::-webkit-details-marker { display:none; }
-        
-        /* Dropdown Animation */
-        details[open] .dropdown-content {
-            animation: slideDown 0.3s ease-out forwards;
+        .group\/item {
+            padding: 1.25rem;
         }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Smooth Marquee */
-        @keyframes marquee-rtl {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-marquee-rtl {
-            display: flex;
-            width: max-content;
-            animation: marquee-rtl 30s linear infinite;
-        }
-        
-        /* Pulse for Verified Badge */
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-        .verified-badge { animation: pulse-glow 2s infinite; }
-
-        /* Custom Scrollbar for Terminals */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.02);
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
+        /* Move close button to bottom for thumbs */
+        details.is-fullscreen .dropdown-content::after {
+            top: auto;
+            bottom: 2.5rem;
+            right: 50%;
+            transform: translateX(50%);
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            width: 140px;
+            text-align: center;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(52, 211, 153, 0.3);
-        }
-    </style>
+    }
+
+    /* 9. Utility */
+    @keyframes marquee-rtl { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .animate-marquee-rtl { display: flex; width: max-content; animation: marquee-rtl 30s linear infinite; }
+    
+    @keyframes pulse-glow { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+    .verified-badge { animation: pulse-glow 2s infinite; }
+
+    /* Custom Scrollbar for the overlay */
+    .dropdown-content::-webkit-scrollbar { width: 5px; }
+    .dropdown-content::-webkit-scrollbar-track { background: transparent; }
+    .dropdown-content::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+</style>
 </head>
 
 <body class="text-slate-200 min-h-screen">
@@ -480,6 +582,8 @@
                 </details>
 
 
+
+
             </nav>
         </div>
 
@@ -562,18 +666,42 @@
         </div>
     </div>
 
-    <script>
-        // Exclusive Accordion Logic: Only one category stays open at a time
-        const details = document.querySelectorAll('nav details');
-        details.forEach((targetDetail) => {
-            targetDetail.addEventListener('toggle', () => {
-                if (targetDetail.open) {
-                    details.forEach((detail) => {
-                        if (detail !== targetDetail) detail.removeAttribute('open');
-                    });
+<script>
+    const details = document.querySelectorAll('nav details');
+    
+    details.forEach((targetDetail) => {
+        targetDetail.addEventListener('toggle', () => {
+            if (targetDetail.open) {
+                details.forEach((detail) => {
+                    if (detail !== targetDetail) detail.removeAttribute('open');
+                });
+                document.body.style.overflow = 'hidden';
+                targetDetail.classList.add('is-fullscreen');
+            } else {
+                const anyOpen = Array.from(details).some(d => d.open);
+                if (!anyOpen) {
+                    document.body.style.overflow = 'auto';
+                    targetDetail.classList.remove('is-fullscreen');
                 }
-            });
+            }
         });
-    </script>
+
+        const content = targetDetail.querySelector('.dropdown-content');
+        
+        // Combined Click and Touch listener for the background
+        const closeOverlay = (e) => {
+            if (e.target === content) {
+                targetDetail.removeAttribute('open');
+            }
+        };
+
+        content.addEventListener('click', closeOverlay);
+        content.addEventListener('touchstart', closeOverlay, { passive: true });
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') details.forEach(d => d.removeAttribute('open'));
+    });
+</script>
 </body>
 </html>
