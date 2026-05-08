@@ -580,61 +580,109 @@
                         </div>
                     </div>
                 </details>
-
-
-
-
             </nav>
         </div>
 
-        <!-- LEGAL TERMINAL SECTION -->
-        <div class="border-t border-white/5 pt-20 pb-16">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto mb-20">
-                
-                <!-- TOS TERMINAL -->
-                <div class="glass-card rounded-2xl overflow-hidden border border-white/10 flex flex-col h-80">
-                    <div class="bg-white/5 px-4 py-2 border-b border-white/10 flex items-center justify-between">
-                        <div class="flex gap-1.5">
-                            <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
-                            <div class="w-2 h-2 rounded-full bg-amber-500/50"></div>
-                            <div class="w-2 h-2 rounded-full bg-emerald-500/50"></div>
-                        </div>
-                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em]">Document: term_of_service.log</span>
-                    </div>
-                    <div class="p-6 overflow-y-auto custom-scrollbar bg-black/40 flex-grow">
-                        <h3 class="text-white text-xs font-black uppercase tracking-widest mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-gavel text-amber-500"></i> Usage Agreement
-                        </h3>
-                        <div class="text-[11px] leading-relaxed text-slate-400 space-y-4">
-                            <p><span class="text-amber-500/50 mr-2">01</span><strong>Authorization:</strong> By authorizing Glep#0100, you acknowledge adherence to standard Discord Community Guidelines.</p>
-                            <p><span class="text-amber-500/50 mr-2">02</span><strong>System Integrity:</strong> Exploitation of bot vulnerabilities or intentional bug abuse is strictly monitored and will result in a global blacklist.</p>
-                            <p><span class="text-amber-500/50 mr-2">03</span><strong>Liability:</strong> The developer is not responsible for misconfigurations or damages resulting from improper administrative usage of bot tools.</p>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- PRIVACY TERMINAL -->
-                <div class="glass-card rounded-2xl overflow-hidden border border-white/10 flex flex-col h-80">
-                    <div class="bg-white/5 px-4 py-2 border-b border-white/10 flex items-center justify-between">
-                        <div class="flex gap-1.5">
-                            <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
-                            <div class="w-2 h-2 rounded-full bg-amber-500/50"></div>
-                            <div class="w-2 h-2 rounded-full bg-emerald-500/50"></div>
-                        </div>
-                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em]">Document: privacy_policy.env</span>
+
+
+
+            <!-- LEGAL SCHEMATIC SECTION -->
+<div class="border-t border-white/5 pt-24 pb-20 px-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- Section Header -->
+        <div class="mb-12 flex items-center gap-4">
+            <div class="h-[1px] flex-grow bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+            <h2 class="text-white text-[10px] font-black uppercase tracking-[0.5em] opacity-40">Security & Legal Protocols</h2>
+            <div class="h-[1px] flex-grow bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            <!-- TOS SCHEMATIC -->
+            <div class="relative group">
+                <!-- Background Accent Glow -->
+                <div class="absolute -inset-1 bg-gradient-to-r from-amber-500/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000"></div>
+                
+                <div class="relative flex border-l border-amber-500/30 bg-white/[0.02] rounded-r-3xl overflow-hidden backdrop-blur-md">
+                    <!-- Sidebar Label -->
+                    <div class="w-12 bg-amber-500/10 flex items-center justify-center border-r border-white/5">
+                        <span class="rotate-180 [writing-mode:vertical-lr] text-[9px] font-bold text-amber-500/60 uppercase tracking-[0.3em] py-8">Terms of Service</span>
                     </div>
-                    <div class="p-6 overflow-y-auto custom-scrollbar bg-black/40 flex-grow">
-                        <h3 class="text-white text-xs font-black uppercase tracking-widest mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-user-shield text-emerald-400"></i> Data Encryption & Privacy
-                        </h3>
-                        <div class="text-[11px] leading-relaxed text-slate-400 space-y-4">
-                            <p><span class="text-emerald-500/50 mr-2">01</span><strong>Data Handling:</strong> We utilize SQLite for secure storage of unique User IDs. No private message content is permanently logged.</p>
-                            <p><span class="text-emerald-500/50 mr-2">02</span><strong>Usage:</strong> Collected metadata is used strictly for bot functionality and is never shared with third-party tracking services.</p>
-                            <p><span class="text-emerald-500/50 mr-2">03</span><strong>Management:</strong> Full data erasure is available upon request. Contact the developer to initiate a complete wipe of your stored info.</p>
+
+                    <div class="p-8 flex-grow">
+                        <div class="flex justify-between items-start mb-8">
+                            <div>
+                                <h3 class="text-white text-sm font-black uppercase tracking-wider mb-1">Usage Agreement</h3>
+                                <div class="h-0.5 w-8 bg-amber-500"></div>
+                            </div>
+                            <i class="fa-solid fa-gavel text-amber-500/20 text-2xl"></i>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex gap-4 group/item">
+                                <span class="mono text-[10px] text-amber-500/40 mt-1">01</span>
+                                <div>
+                                    <h4 class="text-slate-200 text-[11px] font-bold uppercase mb-1">Authorization</h4>
+                                    <p class="text-slate-500 text-[11px] leading-relaxed">By authorizing Glep#0100, you acknowledge adherence to standard Discord Community Guidelines.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 group/item">
+                                <span class="mono text-[10px] text-amber-500/40 mt-1">02</span>
+                                <div>
+                                    <h4 class="text-slate-200 text-[11px] font-bold uppercase mb-1">System Integrity</h4>
+                                    <p class="text-slate-500 text-[11px] leading-relaxed">Exploitation of vulnerabilities or intentional abuse is monitored and results in a global blacklist.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- PRIVACY SCHEMATIC -->
+            <div class="relative group">
+                <!-- Background Accent Glow -->
+                <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000"></div>
+                
+                <div class="relative flex border-l border-emerald-500/30 bg-white/[0.02] rounded-r-3xl overflow-hidden backdrop-blur-md">
+                    <!-- Sidebar Label -->
+                    <div class="w-12 bg-emerald-500/10 flex items-center justify-center border-r border-white/5">
+                        <span class="rotate-180 [writing-mode:vertical-lr] text-[9px] font-bold text-emerald-400/60 uppercase tracking-[0.3em] py-8">Privacy Policy</span>
+                    </div>
+
+                    <div class="p-8 flex-grow">
+                        <div class="flex justify-between items-start mb-8">
+                            <div>
+                                <h3 class="text-white text-sm font-black uppercase tracking-wider mb-1">Data Protocols</h3>
+                                <div class="h-0.5 w-8 bg-emerald-400"></div>
+                            </div>
+                            <i class="fa-solid fa-user-shield text-emerald-400/20 text-2xl"></i>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex gap-4 group/item">
+                                <span class="mono text-[10px] text-emerald-500/40 mt-1">01</span>
+                                <div>
+                                    <h4 class="text-slate-200 text-[11px] font-bold uppercase mb-1">Handling</h4>
+                                    <p class="text-slate-500 text-[11px] leading-relaxed">We utilize SQLite for secure storage of User IDs. No private message content is permanently logged.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 group/item">
+                                <span class="mono text-[10px] text-emerald-500/40 mt-1">02</span>
+                                <div>
+                                    <h4 class="text-slate-200 text-[11px] font-bold uppercase mb-1">Wipe Management</h4>
+                                    <p class="text-slate-500 text-[11px] leading-relaxed">Full data erasure is available upon request. Contact the developer to initiate a complete wipe.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+        
 
             <!-- SYSTEM FOOTER -->
             <div class="flex flex-col items-center border-t border-white/5 pt-16">
