@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glep#0100</title>
+    <title>Glep#0100 | Official Documentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -13,300 +13,250 @@
             background-color: #020617; 
             font-family: 'Inter', sans-serif;
             background-image: radial-gradient(circle at 50% -20%, #1e1b4b 0%, #020617 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
         }
 
         .glass-card {
             background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            height: fit-content;
         }
 
-        details[open].glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .glep-glow { text-shadow: 0 0 15px rgba(52, 211, 153, 0.4); }
+        .glep-glow { text-shadow: 0 0 20px rgba(52, 211, 153, 0.6); }
         .mono { font-family: 'JetBrains Mono', monospace; }
-        summary::-webkit-details-marker { display:none; }
-        summary { list-style: none; outline: none; }
         
-        details[open] .chevron-icon {
-            transform: rotate(180deg);
+        summary { list-style: none; outline: none; }
+        summary::-webkit-details-marker { display:none; }
+        
+        /* Dropdown Animation */
+        details[open] .dropdown-content {
+            animation: slideDown 0.3s ease-out forwards;
         }
 
-        .legal-text {
-            font-size: 11px;
-            line-height: 1.6;
-            color: #94a3b8;
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-    @keyframes marquee-rtl {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-    
-    .animate-marquee-rtl {
-        display: flex;
-        width: max-content;
-        animation: marquee-rtl 30s linear infinite;
-    }
+        /* Smooth Marquee */
+        @keyframes marquee-rtl {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee-rtl {
+            display: flex;
+            width: max-content;
+            animation: marquee-rtl 30s linear infinite;
+        }
+        
+        /* Pulse for Verified Badge */
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        .verified-badge { animation: pulse-glow 2s infinite; }
+
+        /* Custom Scrollbar for Terminals */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(52, 211, 153, 0.3);
+        }
     </style>
 </head>
 
-<body class="text-slate-200 min-h-screen p-6 md:p-12">
+<body class="text-slate-200 min-h-screen">
 
-<div class="w-full bg-amber-400/10 border-y border-amber-500/20 overflow-hidden py-2 backdrop-blur-sm">
-    <div class="whitespace-nowrap animate-marquee-rtl flex items-center">
-        <span class="text-[10px] font-bold text-amber-500 uppercase tracking-widest px-4 flex items-center gap-2">
-            <i class="fa-solid fa-circle-exclamation text-[8px]"></i>
-            REMINDER: Once i join your server make sure to do !terms.
-        </span>
-        <!-- Duplicated for seamless loop -->
-        <span class="text-[10px] font-bold text-amber-500 uppercase tracking-widest px-4 flex items-center gap-2">
-            <i class="fa-solid fa-circle-exclamation text-[8px]"></i>
-            REMINDER: Once i join your server make sure to do !terms.
-        </span>
+    <!-- Sticky Reminder Bar -->
+    <div class="w-full bg-emerald-500/10 border-b border-emerald-500/20 overflow-hidden py-2.5 backdrop-blur-md sticky top-0 z-50">
+        <div class="animate-marquee-rtl flex items-center">
+            <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-[0.2em] px-8 flex items-center gap-2">
+                <i class="fa-solid fa-bolt-lightning text-[8px]"></i>
+                REMINDER: ONCE I JOIN YOUR SERVER MAKE SURE TO DO !HELP OR JOIN THE SUPPORT SERVER VIA !SUPPORT
+            </span>
+            <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-[0.2em] px-8 flex items-center gap-2">
+                <i class="fa-solid fa-bolt-lightning text-[8px]"></i>
+                REMINDER: ONCE I JOIN YOUR SERVER MAKE SURE TO DO !HELP OR JOIN THE SUPPORT SERVER VIA !SUPPORT
+            </span>
+        </div>
     </div>
-</div>
 
-    <div class="max-w-6xl mx-auto">
-        <header class="mb-16 text-center">
-            <div class="inline-block bg-emerald-500/10 border border-emerald-500/20 px-4 py-1 rounded-full mb-4">
-                <span class="text-emerald-400 text-[10px] font-black tracking-[0.3em] uppercase">Verified Discord Bot</span>
+    <div class="max-w-6xl mx-auto px-6 pt-20">
+        <!-- Header -->
+        <header class="mb-24 text-center">
+            <div class="inline-block bg-emerald-500/10 border border-emerald-500/20 px-5 py-1.5 rounded-full mb-6 verified-badge">
+                <span class="text-emerald-400 text-[10px] font-black tracking-[0.3em] uppercase flex items-center gap-2">
+                    <i class="fa-solid fa-shield-check"></i> Verified Discord System
+                </span>
             </div>
-            <h1 class="text-6xl font-black text-white tracking-tight mb-2">
+            <h1 class="text-7xl font-black text-white tracking-tighter mb-4">
                 Glep<span class="text-emerald-400 glep-glow">#0100</span>
             </h1>
-            <p class="text-slate-400 font-medium tracking-wide uppercase text-[10px] tracking-[0.3em]">Official Command Reference / TOS / Privacy Policy</p>
+            <p class="text-slate-500 font-bold tracking-[0.4em] uppercase text-[11px]">Command Reference • Terminal Access • Documentation</p>
         </header>
 
-        <!-- MAIN COMMAND GRID -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start mb-20" id="main-grid">
-
-       <!-- BOTS -->
-            <details class="group glass-card p-6 rounded-3xl border-t-4 border-t-amber-500">
-                <summary class="cursor-pointer">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-robot text-amber-500 text-[10px]"></i>
-                            <h2 class="text-amber-400 text-[10px] font-black tracking-widest uppercase">BOT</h2>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-amber-500 text-[10px] transition-transform chevron-icon"></i>
-                    </div>
-                </summary>
-                <div class="mt-6 bg-black/20 p-3 rounded-xl border border-white/5">
-                    <code class="text-amber-400 font-bold mono text-xs">alias: You can shorten the name of any command for easier use.</code> <br> <br>
-                    <code class="text-amber-400 font-bold mono text-xs">cmds: Displays command distribution across physical directories. Keep in mind some are unusable since they can only be executed by j7o.</code> <br> <br>
-                    <code class="text-amber-400 font-bold mono text-xs">help: YLists all categories and commands automatically.</code> <br> <br>
-                    <code class="text-amber-400 font-bold mono text-xs">say: Repeats the message provided by an administrator.</code> <br> <br>
-                    <code class="text-amber-400 font-bold mono text-xs">setprefix: Sets a custom prefix for this server.</code> <br> <br>
-                    <code class="text-amber-400 font-bold mono text-xs">pings: Replies with roundtrip and API latency.</code> <br> <br>
-                    <code class="text-amber-400 font-bold mono text-xs">supports: Get the official support link and owner information.</code>
-                </div>
-            </details>
-
-      <!-- CHANNELS  -->
-            <details class="group glass-card p-6 rounded-3xl border-t-4 border-t-cyan-500">
-                <summary class="cursor-pointer">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-hashtag text-cyan-500 text-[10px]"></i>
-                            <h2 class="text-cyan-400 text-[10px] font-black tracking-widest uppercase">CHANNELS</h2>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-cyan-500 text-[10px] transition-transform chevron-icon"></i>
-                    </div>
-                </summary>
-                <div class="mt-6 bg-black/20 p-3 rounded-xl border border-white/5">
-                    <code class="text-cyan-400 font-bold mono text-xs">create: Creates text or voice channels with the name of your choice.</code> <br> <br>
-                    <code class="text-cyan-400 font-bold mono text-xs">delete: Deletes text or voice channels.</code> <br> <br>
-                    <code class="text-cyan-400 font-bold mono text-xs">lockdown: Locks a specific channel or all user-accessible channels.</code> <br> <br>
-                    <code class="text-cyan-400 font-bold mono text-xs">unlockall: Restores only the channels that were locked via the lockdown command.</code> <br> <br>
-                    <code class="text-cyan-400 font-bold mono text-xs">nuke: Deletes and recreates the current channel to wipe all history.</code> <br> <br>
-                    <code class="text-cyan-400 font-bold mono text-xs">purge: Bulk deletes a specific number of messages from the channel.</code>
-                </div>
-            </details>
-
-            <!-- LOGS -->
-            <details class="group glass-card p-6 rounded-3xl border-t-4 border-t-red-500">
-                <summary class="cursor-pointer">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-list-ul text-red-500 text-[10px]"></i>
-                            <h2 class="text-red-400 text-[10px] font-black tracking-widest uppercase">LOGS</h2>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-red-500 text-[10px] transition-transform chevron-icon"></i>
-                    </div>
-                </summary>
-                <div class="mt-6 bg-black/20 p-3 rounded-xl border border-white/5">
-                    <code class="text-red-400 font-bold mono text-xs">setlogs: Assigns specific channels to specific moderation events.</code>
-                </div>
-            </details>
-
-            <!-- SERVER -->
-            <details class="group glass-card p-6 rounded-3xl border-t-4 border-t-blue-500">
-                <summary class="cursor-pointer">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-server text-blue-500 text-[10px]"></i>
-                            <h2 class="text-blue-400 text-[10px] font-black tracking-widest uppercase">SERVER</h2>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-blue-500 text-[10px] transition-transform chevron-icon"></i>
-                    </div>
-                </summary>
-                <div class="mt-6 bg-black/20 p-3 rounded-xl border border-white/5">
-                    <code class="text-blue-400 font-bold mono text-xs">announce: Sends a formatted announcement to a specific channel.</code> <br> <br>
-                    <code class="text-blue-400 font-bold mono text-xs">autorole: Setup multiple self-assignable roles.</code> <br> <br>
-                    <code class="text-blue-400 font-bold mono text-xs">inspect: Inspect an emoji and optionally add it to the server.</code> <br> <br>
-                    <code class="text-blue-400 font-bold mono text-xs">roleinfo: Displays information about any role.</code> <br> <br>
-                    <code class="text-blue-400 font-bold mono text-xs">serverinfo: Provides detailed information about the server.</code> <br> <br>
-                    <code class="text-blue-400 font-bold mono text-xs">tsetup: Simple ticket system for your servers.</code>
-                </div>
-            </details>
-
-            <!-- TOOLS -->
-            <details class="group glass-card p-6 rounded-3xl border-t-4 border-t-zinc-500">
-                <summary class="cursor-pointer">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-tools text-zinc-500 text-[10px]"></i>
-                            <h2 class="text-zinc-400 text-[10px] font-black tracking-widest uppercase">TOOLS</h2>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-zinc-500 text-[10px] transition-transform chevron-icon"></i>
-                    </div>
-                </summary>
-                <div class="mt-6 bg-black/20 p-3 rounded-xl border border-white/5">
-                    <code class="text-zinc-400 font-bold mono text-xs">qr: Generates a QR code for a link or text.</code> <br> <br>
-                    <code class="text-zinc-400 font-bold mono text-xs">shorten: Shortens a long URL.</code> <br> <br>
-                    <code class="text-zinc-400 font-bold mono text-xs">emojilist: Extracts all custom emoji names and IDs with pagination.</code>
-                </div>
-            </details>
-
-            <!-- TOS -->
-            <details class="group glass-card p-6 rounded-3xl border-t-4 border-t-amber-600">
-                <summary class="cursor-pointer">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-file-contract text-amber-600 text-[10px]"></i>
-                            <h2 class="text-amber-500 text-[10px] font-black tracking-widest uppercase">TERMS OF SERVICE CMDS ( DEV LOCKED )</h2>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-amber-600 text-[10px] transition-transform chevron-icon"></i>
-                    </div>
-                </summary>
-                <div class="mt-6 bg-black/20 p-3 rounded-xl border border-white/5">
-                    <code class="text-amber-500 font-bold mono text-xs">block: Blacklist a server, user, or bot with a specific threat level.</code> <br> <br> 
-                    <code class="text-amber-500 font-bold mono text-xs">contracts: View all signed agreements and blacklisted servers</code> <br> <br> 
-                    <code class="text-amber-500 font-bold mono text-xs">terms: Establish the Gleps TOS.</code> <br> <br> 
-                    <code class="text-amber-500 font-bold mono text-xs">unblock: Lift a global block on a server, user, or bot.</code> <br> <br> 
-                    <code class="text-amber-500 font-bold mono text-xs">wall: Paginated registry Blacklists, Rejections & Pending.</code>
-                    
-                </div>
-            </details>
-
-       <!-- USER -->
-            <details class="group glass-card p-6 rounded-3xl border-t-4 border-t-lime-500">
-                <summary class="cursor-pointer">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-user text-lime-500 text-[10px]"></i>
-                            <h2 class="text-lime-400 text-[10px] font-black tracking-widest uppercase">USER</h2>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-lime-500 text-[10px] transition-transform chevron-icon"></i>
-                    </div>
-                </summary>
-                <div class="mt-6 bg-black/20 p-3 rounded-xl border border-white/5">
-                    <code class="text-lime-400 font-bold mono text-xs">ban: Permanently removes a user from the server.</code> <br> <br>
-                    <code class="text-lime-400 font-bold mono text-xs">chistory: Deletes all moderation logs for a specific user in this server.</code> <br> <br>
-                    <code class="text-lime-400 font-bold mono text-xs">cwarns: Removes ONLY warnings from the database while preserving other records.</code> <br> <br>
-                    <code class="text-lime-400 font-bold mono text-xs">history: Displays moderation history for yourself or another user.</code> <br> <br>
-                    <code class="text-lime-400 font-bold mono text-xs">kick: Removes a user from the server</code> <br> <br>
-                    <code class="text-lime-400 font-bold mono text-xs">role: Adds or removes a role from a specific user.</code> <br> <br>
-                    <code class="text-lime-400 font-bold mono text-xs">timeout: Restricts a user from interacting for a specified duration.</code> <br> <br>
-                    <code class="text-lime-400 font-bold mono text-xs">userinfo: Provides a clean, detailed summary of a member’s profile.</code>
-                    <code class="text-lime-400 font-bold mono text-xs">warn: Warns an user.</code>
-                </div>
-            </details>
-            
-        </div>
-
-
-        <!-- LOWER LEGAL & FOOTER SECTION -->
-        <div class="border-t border-white/5 pt-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start max-w-4xl mx-auto mb-16">
+        <!-- Command Navigation Dropdowns -->
+        <div class="relative mb-40">
+            <nav class="flex flex-col md:flex-row gap-4 justify-center items-start">
                 
-                <!-- TOS -->
-                <details class="group glass-card p-5 rounded-2xl border-l-2 border-l-slate-500">
-                     <summary class="cursor-pointer">
-                        <div class="flex justify-between items-center">
-                             <span class="text-slate-400 text-[9px] font-bold tracking-widest uppercase">Terms of Service</span>
-                             <i class="fa-solid fa-plus text-slate-600 text-[8px] group-open:rotate-45 transition-transform"></i>
-                       </div>
-                      </summary>
-                     <div class="mt-4 legal-text space-y-2">
-                          <p><strong>Agreement:</strong> By adding or using Glep#0100, you agree to comply with Discord's ToS and these guidelines.</p>
-                          <p><strong>Conduct:</strong> Exploitation of economy systems, software vulnerabilities, or bot-related bugs is strictly prohibited.</p>
-                          <p><strong>Liability:</strong> The developer is not responsible for server-side management or damages resulting from improper bot usage.</p>
-                     </div>
-                   </details>
+                <!-- BOT-->
+                <details class="group w-full md:w-72 relative">
+                    <summary class="glass-card flex items-center justify-between px-6 py-5 rounded-2xl cursor-pointer hover:bg-red-500/10 border-b-2 border-b-red-500/50 transition-all">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-robot text-red-500 text-xs"></i>
+                            <span class="text-white text-[11px] font-black tracking-widest uppercase">BOT</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-600 text-[10px] transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    
+                    <div class="dropdown-content glass-card mt-3 p-5 rounded-2xl space-y-4 absolute z-20 w-full border border-white/10 shadow-2xl">
+                        <div class="group/item">
+                            <code class="text-red-400 font-bold mono text-[10px] block group-hover/item:text-red-300 transition-colors">!alias</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">You can shorten the name of any command for easier use.</p>
+                        </div>
 
-                <!-- PRIVACY -->
-                <details class="group glass-card p-5 rounded-2xl border-l-2 border-l-blue-500">
-                     <summary class="cursor-pointer">
-                        <div class="flex justify-between items-center">
-                             <span class="text-blue-500 text-[9px] font-bold tracking-widest uppercase">Privacy Policy</span>
-                             <i class="fa-solid fa-plus text-slate-600 text-[8px] group-open:rotate-45 transition-transform"></i>
-                       </div>
-                     </summary>
-                     <div class="mt-4 legal-text space-y-2">
-                          <p><strong>Data Collection:</strong> We store User IDs and Server IDs to manage economy profiles and functional settings.</p>
-                          <p><strong>Usage:</strong> Collected data is used strictly for bot functionality and is never sold or shared with third parties.</p>
-                          <p><strong>Management:</strong> Users may contact J7o for manual data removal or to request a full wipe of their stored information.</p>
-                     </div>
+                        <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-red-400 font-bold mono text-[10px] block group-hover/item:text-red-300 transition-colors">!help</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Lists allowed categories and commands automatically.</p>
+                        </div>
+
+                        <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-red-400 font-bold mono text-[10px] block group-hover/item:text-red-300 transition-colors">!pings</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Replies with roundtrip and API latency.</p>
+                        </div>
+
+                         <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-red-400 font-bold mono text-[10px] block group-hover/item:text-red-300 transition-colors">!say</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Repeats the message provided by an administrator.</p>
+                        </div>
+
+                         <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-red-400 font-bold mono text-[10px] block group-hover/item:text-red-300 transition-colors">!setprefix</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Sets a custom prefix for this server.</p>
+                        </div>
+
+                         <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-red-400 font-bold mono text-[10px] block group-hover/item:text-red-300 transition-colors">!support</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Get the official support link and owner information.</p>
+                        </div>
+
+                         <div class="h-[1px] bg-white/5"></div>
+                        <div class="group/item">
+                            <code class="text-red-400 font-bold mono text-[10px] block group-hover/item:text-red-300 transition-colors">!uptime</code>
+                            <p class="text-slate-400 text-[10px] mt-1 leading-relaxed">Replies with the bot's uptime.</p>
+                        </div>
+                    </div>
                 </details>
-            </div>
+            </nav>
+        </div>
 
-                  <div class="mt-12 border-t border-slate-800 pt-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex flex-col">
-                    <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.4em]">Find Me Here</p>
-                    <div class="flex flex-wrap gap-4 mt-3 items-center">
-                        <a href="https://github.com/jl6" target="_blank" class="flex items-center gap-2 group">
-                            <i class="fa-brands fa-github text-slate-600 group-hover:text-white transition-colors"></i>
-                            <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Git:</span>
-                            <span class="text-[9px] text-slate-300 font-bold group-hover:text-white transition-colors">jl6</span>
-                        </a>
-                        
-                        <div class="h-3 w-[1px] bg-slate-800"></div>
-                        
-                        <div class="flex items-center gap-2 group cursor-pointer">
-                            <i class="fa-brands fa-discord text-slate-600 group-hover:text-emerald-400 transition-colors"></i>
-                            <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Discord:</span>
-                            <span class="text-[9px] text-slate-300 font-bold group-hover:text-emerald-400 transition-colors">J7o</span>
+        <!-- LEGAL TERMINAL SECTION -->
+        <div class="border-t border-white/5 pt-20 pb-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto mb-20">
+                
+                <!-- TOS TERMINAL -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-white/10 flex flex-col h-80">
+                    <div class="bg-white/5 px-4 py-2 border-b border-white/10 flex items-center justify-between">
+                        <div class="flex gap-1.5">
+                            <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
+                            <div class="w-2 h-2 rounded-full bg-amber-500/50"></div>
+                            <div class="w-2 h-2 rounded-full bg-emerald-500/50"></div>
+                        </div>
+                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em]">Document: term_of_service.log</span>
+                    </div>
+                    <div class="p-6 overflow-y-auto custom-scrollbar bg-black/40 flex-grow">
+                        <h3 class="text-white text-xs font-black uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-gavel text-amber-500"></i> Usage Agreement
+                        </h3>
+                        <div class="text-[11px] leading-relaxed text-slate-400 space-y-4">
+                            <p><span class="text-amber-500/50 mr-2">01</span><strong>Authorization:</strong> By authorizing Glep#0100, you acknowledge adherence to standard Discord Community Guidelines.</p>
+                            <p><span class="text-amber-500/50 mr-2">02</span><strong>System Integrity:</strong> Exploitation of bot vulnerabilities or intentional bug abuse is strictly monitored and will result in a global blacklist.</p>
+                            <p><span class="text-amber-500/50 mr-2">03</span><strong>Liability:</strong> The developer is not responsible for misconfigurations or damages resulting from improper administrative usage of bot tools.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRIVACY TERMINAL -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-white/10 flex flex-col h-80">
+                    <div class="bg-white/5 px-4 py-2 border-b border-white/10 flex items-center justify-between">
+                        <div class="flex gap-1.5">
+                            <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
+                            <div class="w-2 h-2 rounded-full bg-amber-500/50"></div>
+                            <div class="w-2 h-2 rounded-full bg-emerald-500/50"></div>
+                        </div>
+                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em]">Document: privacy_policy.env</span>
+                    </div>
+                    <div class="p-6 overflow-y-auto custom-scrollbar bg-black/40 flex-grow">
+                        <h3 class="text-white text-xs font-black uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-user-shield text-emerald-400"></i> Data Encryption & Privacy
+                        </h3>
+                        <div class="text-[11px] leading-relaxed text-slate-400 space-y-4">
+                            <p><span class="text-emerald-500/50 mr-2">01</span><strong>Data Handling:</strong> We utilize SQLite for secure storage of unique User IDs. No private message content is permanently logged.</p>
+                            <p><span class="text-emerald-500/50 mr-2">02</span><strong>Usage:</strong> Collected metadata is used strictly for bot functionality and is never shared with third-party tracking services.</p>
+                            <p><span class="text-emerald-500/50 mr-2">03</span><strong>Management:</strong> Full data erasure is available upon request. Contact the developer to initiate a complete wipe of your stored info.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- SYSTEM FOOTER -->
+            <div class="flex flex-col items-center border-t border-white/5 pt-16">
+                <p class="text-slate-600 text-[9px] font-black uppercase tracking-[0.6em] mb-10">WHERE TO FIND ME</p>
+                
+                <!-- Social Links -->
+                <div class="flex flex-wrap justify-center gap-12 mb-16">
+                    <a href="https://github.com/jl6" target="_blank" class="group flex flex-col items-center gap-3">
+                        <div class="w-12 h-12 glass-card rounded-2xl flex items-center justify-center group-hover:border-white/20 group-hover:bg-white/5 transition-all">
+                            <i class="fa-brands fa-github text-xl text-slate-500 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1">Github</span>
+                            <span class="block text-[11px] font-bold text-slate-400 group-hover:text-white transition-colors lowercase">jl6</span>
+                        </div>
+                    </a>
+
+                    <div class="group flex flex-col items-center gap-3 cursor-default">
+                        <div class="w-12 h-12 glass-card rounded-2xl flex items-center justify-center group-hover:border-emerald-500/30 group-hover:bg-emerald-500/5 transition-all">
+                            <i class="fa-brands fa-discord text-xl text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+                        </div>
+                        <div class="text-center">
+                            <span class="block text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1">Discord</span>
+                            <span class="block text-[11px] font-bold text-slate-400 group-hover:text-emerald-400 transition-colors lowercase">j7o</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        const allDetails = document.querySelectorAll('details');
-
-        allDetails.forEach((targetDetail) => {
-            targetDetail.addEventListener('click', (e) => {
-                if (!targetDetail.open) {
-                    allDetails.forEach((el) => {
-                        if (el !== targetDetail) {
-                            el.removeAttribute('open');
-                        }
+        // Exclusive Accordion Logic: Only one category stays open at a time
+        const details = document.querySelectorAll('nav details');
+        details.forEach((targetDetail) => {
+            targetDetail.addEventListener('toggle', () => {
+                if (targetDetail.open) {
+                    details.forEach((detail) => {
+                        if (detail !== targetDetail) detail.removeAttribute('open');
                     });
                 }
             });
         });
     </script>
-
 </body>
 </html>
