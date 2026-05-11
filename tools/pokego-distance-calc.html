@@ -35,13 +35,13 @@
     <div id="app">
         <nav class="sidebar">
             <div class="brand">
-                <h1>J_Projects <span style="font-size: 0.5rem; vertical-align: middle; opacity: 0.5; display: block; margin-top: 4px;">GEO_COOLDOWN_v2</span></h1>
+                <h1>J_Projects <span style="font-size: 0.5rem; vertical-align: middle; opacity: 0.5; display: block; margin-top: 4px;"></span></h1>
             </div>
             
             <ul style="list-style: none; padding: 0; margin: 30px 0 10px 0;">
                 <li>
                     <a href="../index.html" style="color: var(--text-dim); text-decoration: none; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; gap: 8px;">
-                        <span>←</span> DASHBOARD
+                        <span>←</span> Back
                     </a>
                 </li>
             </ul>
@@ -58,7 +58,7 @@
             </div>
 
             <button @click="calculateDistance" class="execute-btn" style="margin-top: 2rem;">
-                Sync & Calculate
+                Calculate
             </button>
 
             <div style="margin-top: auto; padding-bottom: 1rem;">
@@ -69,7 +69,7 @@
         <main class="main-content">
             <header style="margin-bottom: 3rem;">
                 <h2 style="text-transform: uppercase; letter-spacing: 0.2em; color: #10b981; font-weight: 800;">Distance & Cooldown</h2>
-                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.5rem;">Determine travel distance and required sniping wait times for global point-to-point transit.</p>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 0.5rem;">Determine travel distance and required sniping wait times for global point to point transit.</p>
             </header>
 
             <div id="result-area" v-if="result" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
@@ -94,11 +94,6 @@
                 <span class="label-text" style="color: #64748b;">System Disclaimer</span>
                 <p style="font-size: 0.8rem; color: var(--text-dim); margin: 0;">Calculations are optimized for <strong>Sniping Cooldowns</strong> and standard geodesic pathing.</p>
             </div>
-
-            <footer style="margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); color: #334155; font-size: 0.7rem; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase;">
-                J Projects // Geospatial Utility // 2026_STABLE
-            </footer>
-        </main>
     </div>
 
     <script>
