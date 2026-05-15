@@ -27,6 +27,16 @@
             J_Projects<span class="text-xs ml-3 px-2 py-1 bg-emerald-900/30 border border-emerald-500/50 rounded text-emerald-400 align-middle animate-pulse"></span>
                    </h1>
                      <p class="text-slate-400 mt-2 uppercase tracking-[0.3em] text-[10px] font-bold">Experimental Tools</p>
+                     <div class="flex items-center gap-2 mt-2">
+    <div class="flex gap-1">
+        <div class="w-1 h-1 bg-emerald-500 animate-bounce"></div>
+        <div class="w-1 h-1 bg-emerald-500 animate-bounce [animation-delay:-.3s]"></div>
+        <div class="w-1 h-1 bg-emerald-500 animate-bounce [animation-delay:-.5s]"></div>
+    </div>
+    <span class="text-[8px] font-mono text-emerald-500/70 uppercase tracking-widest">
+        I need to sleep // Error: 404 not found
+    </span>
+</div>
                  </div>
              </div>
         </div>
@@ -175,5 +185,19 @@
             </div>
         </div>
     </div> 
+<!-- The Tilt Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+<script>
+    // This targets every element with the 'group' class
+    VanillaTilt.init(document.querySelectorAll(".group"), {
+        max: 15,          // How much it tilts (15 degrees)
+        speed: 400,       // Transition speed
+        glare: true,      // Adds the light reflection
+        "max-glare": 0.3, // Brightness of the light
+        gyroscope: true   // Allows it to tilt on mobile when you move your phone!
+    });
+</script>
+</script>
 </body>
 </html>
