@@ -3,37 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR TOOL | J_Projects</title>
+    <title>QR GEN | J_Projects</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
         
-        body { 
-            background-color: #020617; 
-            font-family: 'Inter', sans-serif;
-            color: #e2e8f0;
+        body { font-family: 'JetBrains+Mono', monospace; }
+
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(16, 185, 129, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0.1;
+            position: absolute;
+            bottom: 100%;
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
         }
 
-        .glass-card {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(16, 185, 129, 0.1);
+        @keyframes scanline {
+            0% { bottom: 100%; }
+            100% { bottom: -100px; }
         }
 
-        .mono { font-family: 'JetBrains Mono', monospace; }
+        .terminal-grid {
+            background-image: radial-gradient(circle, #10b981 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.03;
+        }
 
-        /* Navigation Tab Active State */
+        .preserve-3d { transform-style: preserve-3d; perspective: 1000px; }
+        .inner-content { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
         .tab-btn.active {
-            color: #10b981;
+            background: rgba(16, 185, 129, 0.15);
             border-color: #10b981;
-            background: rgba(16, 185, 129, 0.05);
+            color: #10b981;
+        }
+
+        .qr-output-card {
+            background: #ffffff;
+            padding: 1.5rem;
+            display: inline-flex;
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
         }
 
         #drop-zone {
-            border: 2px dashed rgba(16, 185, 129, 0.2);
+            border: 1px dashed rgba(16, 185, 129, 0.2);
             transition: all 0.3s ease;
         }
         
@@ -42,102 +63,99 @@
             background: rgba(16, 185, 129, 0.05);
         }
 
-        .qr-output-card {
-            background: #ffffff;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            display: inline-flex;
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
-        }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-thumb { background: #10b981; }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8">
+<body class="bg-black text-slate-300 min-h-screen overflow-x-hidden selection:bg-emerald-500/30 selection:text-emerald-400">
 
-    <div class="max-w-7xl mx-auto">
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="scanline"></div>
+        <div class="absolute inset-0 terminal-grid"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 py-12 relative z-20">
+        
         <!-- HEADER -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8 border-b border-emerald-500/20 pb-12">
             <div>
-                <a href="../index.html" class="text-[10px] font-black text-emerald-500/60 uppercase tracking-[0.3em] hover:text-emerald-400 transition-colors mb-2 block">
-                    <i class="fa-solid fa-arrow-left-long mr-2"></i> Back
+                <a href="../index.html" class="text-[10px] font-bold text-emerald-500/60 uppercase tracking-[0.4em] hover:text-emerald-400 transition-all flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-chevron-left"></i> BACK
                 </a>
-                <h1 class="text-5xl font-extrabold tracking-[-0.05em] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 uppercase">
-                    QR CODE
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-emerald-400 uppercase cursor-default">
+                    QR_<span class="text-white">GEN</span>
                 </h1>
-                <p class="text-slate-400 mt-2 uppercase tracking-[0.3em] text-[10px] font-bold">QR_ENCODER // DATA_INSPECTION_PROTOCOL</p>
             </div>
-        </div>
 
-        <!-- MAIN UTILITY GRID -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="flex gap-2 bg-zinc-950/50 p-1 border border-white/5">
+                <button onclick="switchTab('encoder')" id="tab-encoder" class="tab-btn active px-8 py-3 text-[10px] font-black uppercase tracking-widest transition-all">
+                    ENCODER
+                </button>
+                <button onclick="switchTab('decoder')" id="tab-decoder" class="tab-btn px-8 py-3 text-[10px] font-black uppercase tracking-widest text-slate-600 transition-all">
+                    DECODER
+                </button>
+            </div>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             <!-- LEFT COLUMN: CONTROLS -->
             <div class="lg:col-span-4 space-y-6">
-                <!-- Tab Selector -->
-                <div class="glass-card p-2 rounded-2xl flex gap-2">
-                    <button onclick="switchTab('encoder')" id="tab-encoder" class="tab-btn active flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">
-                        Encoder
-                    </button>
-                    <button onclick="switchTab('decoder')" id="tab-decoder" class="tab-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-500 transition-all">
-                        Decoder
-                    </button>
-                </div>
-
                 <!-- Encoder Controls -->
-                <div id="controls-encoder" class="glass-card p-6 rounded-3xl border-t-2 border-emerald-500/50">
-                    <label class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-4 italic">LINK</label>
-                    <input type="url" id="urlInput" placeholder="https://..." value="https://google.com" 
-                           class="w-full bg-black/60 border border-emerald-500/20 rounded-xl px-4 py-4 text-xs mono text-emerald-400 focus:outline-none focus:border-emerald-500/50 mb-4">
-                    
-                    <button onclick="generateQRCode()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-4 rounded-xl text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-emerald-900/20">
-                        Generate QR Code
-                    </button>
-
-                    <div class="mt-6 pt-6 border-t border-slate-800">
-                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-2"></span>
-                        <ul class="text-[9px] mono text-slate-400 space-y-2">
-                            <li class="flex justify-between"><span></span> <span class="text-emerald-500"></span></li>
-                            <li class="flex justify-between"><span></span> <span class="text-emerald-500"></span></li>
-                        </ul>
+                <div id="controls-encoder" class="bg-zinc-950/50 border border-emerald-500/20 p-8 preserve-3d">
+                    <div class="inner-content">
+                        <label class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-4 italic">PASTE YOUR LINK</label>
+                        <textarea id="urlInput" placeholder="ENTER_URL_OR_DATA..." 
+                            class="w-full h-32 bg-black border border-emerald-500/20 p-4 text-[11px] text-emerald-400 focus:outline-none focus:border-emerald-500 transition-all resize-none mb-6">https://google.com</textarea>
+                        
+                        <button onclick="generateQRCode()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black py-4 text-[10px] uppercase tracking-widest transition-all">
+                            GENERATE QR CODE
+                        </button>
                     </div>
                 </div>
 
-                <!-- Decoder Controls (Hidden by default) -->
-                <div id="controls-decoder" class="hidden glass-card p-6 rounded-3xl border-t-2 border-cyan-500/50">
-                    <label class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest block mb-4 italic">//UPLOAD </label>
-                    <p class="text-[10px] text-slate-500 leading-relaxed mb-6 italic">
-                        Upload a QR code image for local client-side analysis. No data is transmitted to external servers.
-                    </p>
-                    <div id="drop-zone" onclick="document.getElementById('file-input').click()" class="rounded-2xl p-10 text-center cursor-pointer group">
-                        <i class="fa-solid fa-expand text-2xl text-slate-700 group-hover:text-cyan-400 mb-3 transition-colors"></i>
-                        <p class="text-slate-500 text-[9px] font-black tracking-widest uppercase">Select Image</p>
-                        <input type="file" id="file-input" hidden accept="image/*">
+                <!-- Decoder Controls -->
+                <div id="controls-decoder" class="hidden bg-zinc-950/50 border border-emerald-500/20 p-8 preserve-3d">
+                    <div class="inner-content">
+                        <label class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-4 italic">SCAN QR CODE</label>
+                        <p class="text-[9px] text-slate-500 leading-relaxed mb-8 uppercase tracking-wider">
+                            Local client-side analysis. No data is transmitted during inspection.
+                        </p>
+                        <div id="drop-zone" onclick="document.getElementById('file-input').click()" class="p-12 text-center cursor-pointer group">
+                            <i class="fa-solid fa-expand text-2xl text-slate-700 group-hover:text-emerald-400 mb-4 transition-colors"></i>
+                            <p class="text-slate-500 text-[9px] font-black tracking-widest uppercase">Select Image</p>
+                            <input type="file" id="file-input" hidden accept="image/*">
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: OUTPUT -->
+            <!-- RIGHT COLUMN: VISUAL OUTPUT -->
             <div class="lg:col-span-8">
-                <div class="glass-card rounded-3xl p-8 md:p-16 flex flex-col items-center justify-center min-h-[500px] border-b-4 border-emerald-500/20 relative overflow-hidden">
-                    <!-- Subtle background grid effect -->
-                    <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#10b981 1px, transparent 1px); background-size: 20px 20px;"></div>
+                <div class="bg-zinc-950/50 border border-emerald-500/20 p-8 md:p-16 flex flex-col items-center justify-center min-h-[550px] preserve-3d">
                     
-                    <div id="encoder-output" class="relative z-10 flex flex-col items-center">
+                    <!-- ENCODER OUTPUT -->
+                    <div id="encoder-output" class="inner-content flex flex-col items-center">
                         <div class="qr-output-card">
                             <div id="qrcode"></div>
                         </div>
-                        <p id="statusMessage" class="mt-8 mono text-[10px] text-emerald-500/70 tracking-widest uppercase">System Ready</p>
+                        <div class="mt-12 flex items-center gap-4">
+                            <div class="w-2 h-2 bg-emerald-500 animate-pulse"></div>
+                            <p id="statusMessage" class="text-[10px] text-emerald-500/70 tracking-[0.3em] uppercase">Ready</p>
+                        </div>
                     </div>
 
-                    <div id="decoder-output" class="hidden relative z-10 w-full">
-                        <div id="result-area" class="w-full max-w-2xl mx-auto p-8 rounded-2xl border bg-black/60 hidden"></div>
-                        <div id="placeholder-decoder" class="text-center text-slate-700">
-                            <i class="fa-solid fa-鋪 text-6xl mb-4 opacity-20"></i>
-                            <p class="text-[10px] font-bold uppercase tracking-widest">Waiting for Input...</p>
+                    <!-- DECODER OUTPUT -->
+                    <div id="decoder-output" class="hidden inner-content w-full">
+                        <div id="result-area" class="w-full max-w-2xl mx-auto p-10 border border-emerald-500/20 bg-black/40 hidden"></div>
+                        <div id="placeholder-decoder" class="text-center opacity-20">
+                            <i class="fa-solid fa-braille text-6xl mb-6"></i>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.5em]">Waiting on the QR CODE</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>   
+        </main>
     </div>
 
     <canvas id="canvas" class="hidden"></canvas>
@@ -168,7 +186,6 @@
             }
         }
 
-        // Encoder Logic
         function generateQRCode() {
             const urlInput = document.getElementById('urlInput');
             const qrcodeContainer = document.getElementById('qrcode');
@@ -181,9 +198,9 @@
             setTimeout(() => {
                 new QRCode(qrcodeContainer, {
                     text: url,
-                    width: 220,
-                    height: 220,
-                    colorDark : "#020617",
+                    width: 250,
+                    height: 250,
+                    colorDark : "#000000",
                     colorLight : "#ffffff",
                     correctLevel : QRCode.CorrectLevel.H
                 });
@@ -191,7 +208,6 @@
             }, 300);
         }
 
-        // Decoder Logic
         const fileInput = document.getElementById('file-input');
         const resultArea = document.getElementById('result-area');
         const placeholder = document.getElementById('placeholder-decoder');
@@ -216,14 +232,15 @@
                     placeholder.classList.add('hidden');
                     
                     if (code) {
-                        resultArea.className = 'w-full max-w-2xl mx-auto p-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 animate-pulse';
+                        resultArea.className = 'w-full max-w-2xl mx-auto p-10 border border-emerald-500/40 bg-emerald-500/5';
                         resultArea.innerHTML = `
-                            <div class="text-emerald-400 text-[10px] font-black tracking-widest uppercase mb-4 italic">// Matrix_Decoded_Result:</div>
-                            <div class="mono text-lg text-white break-all bg-black/40 p-4 rounded-xl border border-white/5">${code.data}</div>
+                            <div class="text-emerald-400 text-[10px] font-black tracking-widest uppercase mb-6 italic">// DECODED_INTEL_PAYLOAD:</div>
+                            <div class="text-[12px] text-white break-all bg-black p-6 border border-white/10 font-mono tracking-wider">${code.data}</div>
                         `;
                     } else {
-                        resultArea.className = 'w-full max-w-2xl mx-auto p-8 rounded-2xl border border-red-500/30 bg-red-500/5';
-                        resultArea.innerHTML = `<div class="text-red-400 text-[10px] font-black tracking-widest uppercase">❌ No Matrix Detected in Archive</div>`;
+                        resultArea.className = 'w-full max-w-2xl mx-auto p-10 border border-red-500/30 bg-red-500/5';
+                        resultArea.innerHTML = `<div class="text-red-400 text-[10px] font-black tracking-widest uppercase flex items-center gap-3">
+                            <i class="fa-solid fa-triangle-exclamation"></i> ERROR: NO_DATA_DETECTED_IN_SECTOR</div>`;
                     }
                 };
                 img.src = event.target.result;

@@ -3,133 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Quick Paste | J Projects</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>QUICK PASTE | J_Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Targeted fix for the disclaimer and editor layout */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .disclaimer-card {
-            background: rgba(16, 185, 129, 0.05);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--emerald);
-            padding: 1.25rem;
-            border-radius: 0.5rem;
-        }
-
-        .disclaimer-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 0.5rem;
-        }
-
-        .disclaimer-header h2 {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin: 0;
-            color: var(--text-main);
-        }
-
-        .editor-container {
-            background: #0a0a0a;
-            border: 1px solid var(--border);
-            border-radius: 1rem;
-            display: flex;
-            flex-direction: column;
-            min-height: 400px;
-            height: 60vh;
-        }
-
-        #textInput {
-            flex: 1;
-            background: transparent;
-            border: none;
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+        
+        body { 
+            font-family: 'JetBrains Mono', monospace; 
+            background-color: #000;
             color: #e2e8f0;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            padding: 1.5rem;
-            resize: none;
-            outline: none;
         }
 
-        .editor-footer {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 0.75rem 1.5rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.7rem;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-dim);
+        .terminal-grid {
+            background-image: radial-gradient(circle, #10b981 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.03;
         }
+
+        .glass-panel {
+            background: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .editor-box {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            transition: border 0.3s ease;
+        }
+
+        .editor-box:focus-within {
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+
+        #textInput::placeholder {
+            color: rgba(16, 185, 129, 0.3);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px #10b981;
+        }
+
+        .action-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .action-btn:hover {
+            background: #10b981;
+            color: #000;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Custom scrollbar for terminal look */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #10b981; }
+        ::-webkit-scrollbar-track { background: transparent; }
     </style>
 </head>
-<body>
-    <nav class="sidebar">
-        <div class="brand">
-            <h1>J_Projects <span style="font-size: 0.5rem; display: block; opacity: 0.5;"></span></h1>
-        </div>
-        
-        <ul style="list-style: none; padding: 0; margin: 2rem 0;">
-            <li><a href="../index.html" style="text-decoration: none; color: var(--text-dim); font-size: 0.8rem;">Back</a></li>
-        </ul>
+<body class="min-h-screen overflow-x-hidden p-4 md:p-10">
 
-        <div class="control-panel">
-            <span class="label-text">Operations</span>
-            <button onclick="downloadFile()" class="execute-btn" style="margin-top: 10px; width: 100%;">Export .txt</button>
-            <button onclick="clearEditor()" style="margin-top: 10px; width: 100%; background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 10px; cursor: pointer; border-radius: 4px; font-size: 0.7rem;">Wipe Buffer</button>
-        </div>
-    </nav>
+    <div class="fixed inset-0 pointer-events-none terminal-grid"></div>
 
-    <main class="main-content">
-        <header>
-            <h2 style="color: var(--emerald); text-transform: uppercase; letter-spacing: 0.2em;">Quick Paste</h2>
+    <div class="max-w-6xl mx-auto relative z-10">
+        <!-- TOP NAV / HEADER -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6 border-b border-emerald-500/10 pb-8">
+            <div>
+                <a href="../index.html" class="text-[10px] font-bold text-emerald-500/60 uppercase tracking-[0.4em] hover:text-emerald-400 transition-all flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-chevron-left text-[8px]"></i> BACK
+                </a>
+                <h1 class="text-4xl font-extrabold tracking-tighter text-emerald-400 uppercase">
+                    PASTE_<span class="text-white">YOUR CODE</span>
+                </h1>
+            </div>
+
+            <div class="flex gap-4 w-full md:w-auto">
+                <button onclick="downloadFile()" class="action-btn flex-1 md:flex-none border border-emerald-500/30 px-6 py-3 text-[10px] font-black uppercase tracking-widest bg-emerald-500/5">
+                    EXPORT
+                </button>
+                <button onclick="clearEditor()" class="action-btn flex-1 md:flex-none border border-red-500/30 px-6 py-3 text-[10px] font-black uppercase tracking-widest bg-red-500/5 text-red-400 hover:bg-red-500 hover:text-white">
+                    ERASE
+                </button>
+            </div>
         </header>
 
-        <!-- The section that was causing issues -->
-        <section class="disclaimer-card">
-            <div class="disclaimer-header">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                <h2>Memory Alert</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- ALERT / SYSTEM INFO -->
+            <div class="lg:col-span-3 space-y-6">
+                <div class="glass-panel p-6 border-l-4 border-l-emerald-500">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i class="fa-solid fa-triangle-exclamation text-emerald-500 text-xs"></i>
+                        <h2 class="text-[10px] font-black uppercase tracking-[0.2em]">Memory State</h2>
+                    </div>
+                    <p class="text-[10px] text-slate-500 leading-relaxed uppercase">
+                    Refreshing the browser will purge all current payload data from local memory.
+                    </p>
+                </div>
+                </div>
             </div>
-            <p style="font-size: 0.8rem; margin: 0; color: var(--text-dim);">Content is stored in active session memory. <strong>Refreshing</strong> will flush the current buffer.</p>
-        </section>
 
-        <section class="editor-container">
-            <textarea id="textInput" placeholder="> Initializing input buffer..."></textarea>
-            <div class="editor-footer">
-                <div id="charCount">0 CHARS</div>
-                <div>ENC: UTF-8</div>
+            <!-- EDITOR AREA -->
+            <div class="lg:col-span-9">
+                <div class="editor-box rounded-sm flex flex-col h-[65vh] min-h-[400px]">
+                    <div class="flex items-center gap-4 bg-zinc-950/80 px-6 py-3 border-b border-white/5">
+                        <div class="flex gap-1.5">
+                            <div class="w-2 h-2 rounded-full bg-red-500/20"></div>
+                            <div class="w-2 h-2 rounded-full bg-amber-500/20"></div>
+                            <div class="w-2 h-2 rounded-full bg-emerald-500/20"></div>
+                        </div>
+                        <span class="text-[9px] font-bold text-slate-600 uppercase tracking-widest italic">PASTE TXT</span>
+                    </div>
+                    
+                    <textarea id="textInput" placeholder="> READY_FOR_INPUT..." 
+                        class="flex-1 bg-transparent border-none text-emerald-400 p-8 text-[13px] leading-relaxed focus:outline-none resize-none selection:bg-emerald-500/30"></textarea>
+                    
+                    <div class="bg-zinc-950/80 px-8 py-4 border-t border-white/5 flex justify-between items-center">
+                        <div id="charCount" class="text-[9px] font-black text-slate-500 tracking-[0.2em]">0 CHARS</div>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <script>
         const textarea = document.getElementById('textInput');
         const charCountDisplay = document.getElementById('charCount');
 
         textarea.addEventListener('input', () => {
-            charCountDisplay.innerText = `${textarea.value.length.toLocaleString()} CHARS`;
+            const count = textarea.value.length;
+            charCountDisplay.innerText = `${count.toLocaleString()}_CHARS`;
+            
+            if (count > 0) {
+                charCountDisplay.classList.replace('text-slate-500', 'text-emerald-500');
+            } else {
+                charCountDisplay.classList.replace('text-emerald-500', 'text-slate-500');
+            }
         });
 
         function clearEditor() {
-            if (confirm("Execute buffer wipe?")) {
+            if (confirm("CRITICAL: Wipe entire buffer content?")) {
                 textarea.value = '';
-                charCountDisplay.innerText = '0 CHARS';
+                charCountDisplay.innerText = '0_CHARS';
+                charCountDisplay.classList.replace('text-emerald-500', 'text-slate-500');
             }
         }
 
         function downloadFile() {
+            if (!textarea.value.trim()) {
+                alert("PROTOCOL_ERROR: Buffer is empty.");
+                return;
+            }
             const blob = new Blob([textarea.value], { type: 'text/plain' });
             const link = document.createElement('a');
-            link.download = `j_projects_note_${new Date().toISOString().slice(0,10)}.txt`;
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+            link.download = `LOG_${timestamp}.txt`;
             link.href = window.URL.createObjectURL(blob);
             link.click();
         }
