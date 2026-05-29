@@ -3,287 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gleps Blueprint</title>
+    <title>Glep OS Lifecycle & Deployment Blueprint</title>
     <style>
         :root {
-            --bg-main: #0d1117;
-            --bg-card: #161b22;
-            --border-color: #30363d;
-            --text-main: #c9d1d9;
-            --text-muted: #8b949e;
-            --accent-glow: #00ffea;
-            --accent-green: #7ee787;
-            --code-bg: #010409;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-blue: #38bdf8;
+            --accent-green: #4ade80;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --code-bg: #020617;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--bg-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
-            padding: 2rem 1rem;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
+            padding: 40px 20px;
         }
 
         header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
             text-align: center;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 2rem;
         }
 
-        header h1 {
-            color: #ffffff;
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(0, 255, 234, 0.2);
+        h1 {
+            color: var(--accent-blue);
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
         }
 
         header p {
             color: var(--text-muted);
             font-size: 1.1rem;
+            margin: 0;
         }
 
-        .highlight {
-            color: var(--accent-glow);
-            font-weight: 600;
-        }
-
-        .section {
-            background-color: var(--bg-card);
+        .phase-section {
+            background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
 
-        .section h2 {
-            color: #ffffff;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        h2 {
+            color: var(--accent-blue);
+            margin-top: 0;
+            font-size: 1.6rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 10px;
         }
 
-        .section h2::before {
-    
-            color: var(--accent-glow);
+        h3 {
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
         }
 
-        .step-list {
-            list-style: none;
+        p {
+            color: var(--text-main);
+            margin-bottom: 15px;
         }
 
-        .step-item {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-            border-left: 2px solid var(--border-color);
+        ul {
+            margin: 0 0 20px 0;
+            padding-left: 25px;
         }
 
-        .step-item:last-child {
-            margin-bottom: 0;
+        li {
+            margin-bottom: 8px;
+            color: var(--text-main);
         }
 
-        .step-title {
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border-radius: 20px;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-
-        .badge-mac { background-color: #238636; color: #ffffff; }
-        .badge-pi { background-color: #1f6feb; color: #ffffff; }
-        .badge-github { background-color: #6e7681; color: #ffffff; }
-
-        code, pre {
-            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-            font-size: 0.9rem;
-            background-color: var(--code-bg);
-            border-radius: 6px;
+        strong {
+            color: var(--accent-blue);
         }
 
         code {
-            padding: 0.2rem 0.4rem;
-            color: #ff79c6;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: var(--code-bg);
+            color: var(--accent-green);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
         }
 
         pre {
-            padding: 1rem;
-            overflow-x: auto;
+            background-color: var(--code-bg);
             border: 1px solid var(--border-color);
-            margin: 0.75rem 0;
-            color: #e6edf3;
-        }
-
-        .comment { color: var(--text-muted); }
-        .keyword { color: #ff79c6; }
-        .string { color: #a5d6ff; }
-
-        .pipeline {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--code-bg);
-            padding: 1.5rem;
             border-radius: 8px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-weight: 600;
+            padding: 15px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: var(--text-main);
+            padding: 0;
             font-size: 0.9rem;
+            display: block;
         }
 
-        .pipe-node {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 1rem;
+        .warn-note {
+            background-color: rgba(234, 179, 8, 0.1);
+            border-left: 4px solid #eab308;
+            padding: 15px;
             border-radius: 4px;
-            flex: 1;
-            max-width: 200px;
+            margin: 20px 0;
+            color: #fef08a;
         }
 
-        .pipe-arrow {
-            color: var(--accent-glow);
-            font-size: 1.2rem;
-            padding: 0 0.5rem;
+        .warn-note strong {
+            color: #eab308;
         }
 
-        footer {
+        .footer {
             text-align: center;
             color: var(--text-muted);
             font-size: 0.85rem;
-            margin-top: 4rem;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>Simple Deployment Guide</h1>
-        <p>Reference guide for updating the bot globally via <span class="highlight">git push</span> execution loops</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>Glep OS Lifecycle Blueprint</h1>
+            <p>From Scratch to Seamless, Self-Hosted Automated Git Deployments</p>
+        </header>
 
-    <div class="section">
-        <h2>The Architecture Flow</h2>
-        <div class="pipeline">
-            <div class="pipe-node" style="border-color: var(--accent-green);">MacBook Air<br><span style="font-size:0.75rem; color:var(--text-muted);">Local Code Commit</span></div>
-            <div class="pipe-arrow">➔</div>
-            <div class="pipe-node">GitHub Remote<br><span style="font-size:0.75rem; color:var(--text-muted);">Workflow Event Trigger</span></div>
-            <div class="pipe-arrow">➔</div>
-            <div class="pipe-node" style="border-color: var(--accent-glow);">Raspberry Pi<br><span style="font-size:0.75rem; color:var(--text-muted);">Self-Hosted Runner Sync</span></div>
-        </div>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">
-            <strong>Security Rule:</strong> No ports are open on the local router. The Raspberry Pi worker initiates outward polling long-connections to GitHub's secure messaging queue socket automatically.
-        </p>
-    </div>
+        <div class="phase-section">
+            <h2>Phase 1: The MacBook Setup (Source)</h2>
+            <p>Ensure your local development repository is clean, structured properly, and clear of environment noise before pushing to the cloud.</p>
+            
+            <h3>1. Target Project Layout</h3>
+            <pre><code>glep/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
+├── commands/
+├── utils/
+├── index.js
+├── package.json
+└── .gitignore</code></pre>
 
-    <div class="section">
-        <h2>Step 1: Raspberry Pi Runner Setup</h2>
-        <ul class="step-list">
-            <li class="step-item">
-                <span class="badge badge-pi">Raspberry Pi Terminal</span>
-                <div class="step-title">1. Create Execution Space & Extract Runner Packages</div>
-                <p>Run this configuration layout inside your home folder directory:</p>
-                <pre>mkdir actions-runner && cd actions-runner
+            <h3>2. Configuration Files Setup</h3>
+            <p>Verify your root workspace files contain these exact properties:</p>
+            
+            <p><strong><code>.gitignore</code></strong> (Keeps system nodes and secrets local):</p>
+            <pre><code>node_modules/
+.env</code></pre>
 
-<span class="comment"># Pull official ARM64 background runner source</span>
-curl -o actions-runner-linux-arm64-2.317.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.317.0/actions-runner-linux-arm64-2.317.0.tar.gz
+            <p><strong><code>package.json</code></strong> (Explicitly tells the Pi which modules to fetch):</p>
+            <pre><code>{
+  "name": "glep",
+  "version": "3.0.0",
+  "main": "index.js",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "quick.db": "^9.1.7"
+  }
+}</code></pre>
 
-<span class="comment"># Unpack binaries</span>
-tar xzf ./actions-runner-linux-arm64-2.317.0.tar.gz</pre>
-            </li>
-            <li class="step-item">
-                <span class="badge badge-github">GitHub UI ➔ Pi Terminal</span>
-                <div class="step-title">2. Register Machine Signature Mapping</div>
-                <p>Navigate to <code>Settings ➔ Actions ➔ Runners</code> on GitHub, click <strong>New Self-Hosted Runner</strong>, and run your customized token sequence link:</p>
-                <pre>./config.sh --url https://github.com/jl6/glep --token <span class="string">YOUR_RUNNER_REGISTRATION_TOKEN</span></pre>
-            </li>
-            <li class="step-item">
-                <span class="badge badge-pi">Raspberry Pi Terminal</span>
-                <div class="step-title">3. Establish Permanent System Service Daemon</div>
-                <p>Install the process hook into systemd scripts so it executes automatically when the Pi boots up:</p>
-                <pre>sudo ./svc.sh install
-sudo ./svc.sh start</pre>
-            </li>
-        </ul>
-    </div>
+            <h3>3. Initialize and Link Git to GitHub</h3>
+            <p>Create a brand new <strong>Private GitHub Repository</strong> named <code>glep</code>, then open your MacBook Terminal inside your local project folder and execute:</p>
+            <pre><code># Initialize git tracking
+git init -b main
 
-    <div class="section">
-        <h2>Phase 2: MacBook Repository Rules</h2>
-        <ul class="step-list">
-            <li class="step-item">
-                <span class="badge badge-mac">MacBook Workspace</span>
-                <div class="step-title">1. Generate Hidden Folder Trees</div>
-                <p>Inside the root execution path of your local <code>glep</code> bot repo directory, create the target automation mapping folder:</p>
-                <pre>mkdir -p .github/workflows</pre>
-            </li>
-            <li class="step-item">
-                <span class="badge badge-mac">MacBook Workspace</span>
-                <div class="step-title">2. Write the Script Blueprint (deploy.yml)</div>
-                <p>Create a file named <code>deploy.yml</code> exactly inside that hidden folder chain and paste this automation script block:</p>
-                <pre><span class="keyword">name:</span> Glep Automated Deployment
-
-<span class="keyword">on:</span>
-  <span class="keyword">push:</span>
-    <span class="keyword">branches:</span> [ main ]
-
-<span class="keyword">jobs:</span>
-  <span class="keyword">deploy:</span>
-    <span class="keyword">runs-on:</span> self-hosted
-
-    <span class="keyword">steps:</span>
-      - <span class="keyword">name:</span> Checkout Code Base
-        <span class="keyword">uses:</span> actions/checkout@v4
-
-      - <span class="keyword">name:</span> Clear and Install Production Dependencies
-        <span class="keyword">run:</span> |
-          npm ci --only=production
-
-      - <span class="keyword">name:</span> Hot-Reload PM2 Process
-        <span class="keyword">run:</span> |
-          pm2 restart glep --update-env || pm2 start index.js --name "glep"</pre>
-            </li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>The Daily Production Loop</h2>
-        <p style="margin-bottom: 1rem;">From this point forward, your workflow strictly consists of your local MacBook terminal execution paths. Drop your SSH software entirely.</p>
-        <pre><span class="comment"># 1. Stage any modified tracking files</span>
+# Stage and commit your clean layout
 git add .
+git commit -m "infrastructure: initial pristine commit"
 
-<span class="comment"># 2. Commit the changes to your local system timeline</span>
-git commit -m "Updated scan module logic definitions"
+# Link to your fresh GitHub repo (Replace with your actual account name)
+git remote add origin https://github.com/YOUR_GITHUB_USERNAME/glep.git
 
-<span class="comment"># 3. Fire the pipeline (Pi self-reloads in background automatically)</span>
-git push origin main</pre>
+# Force push the environment setup out
+git push -u origin main --force</code></pre>
+        </div>
+
+        <div class="phase-section">
+            <h2>Phase 2: The Pi Setup (The Engine)</h2>
+            <p>Connect your Raspberry Pi host directly to the GitHub ecosystem to receive secure pipeline commands.</p>
+
+            <h3>1. Download & Extract a Clean Runner instance</h3>
+            <p>SSH into your <strong>Raspberry Pi</strong> and install the clean automation agent binaries:</p>
+            <pre><code># Move to the home directory and remove old confused binary links
+cd ~
+rm -rf actions-runner
+
+# Create a fresh space and pull down the ARM64 runner binaries
+mkdir actions-runner && cd actions-runner
+curl -o actions-runner-linux-arm64-2.316.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.316.1/actions-runner-linux-arm64-2.316.1.tar.gz
+tar xzf ./actions-runner-linux-arm64-2.316.1.tar.gz</code></pre>
+
+            <h3>2. Link and Register the Runner</h3>
+            <ul>
+                <li>Navigate to your GitHub repo webpage, then head to <strong>Settings</strong> &gt; <strong>Actions</strong> &gt; <strong>Runners</strong>.</li>
+                <li>Click <strong>New self-hosted runner</strong>, select <strong>Linux</strong>, and scroll to the bottom code block.</li>
+                <li>Copy the unique <code>./config.sh</code> string displayed under the configuration block and execute it directly on your <strong>Raspberry Pi</strong>.</li>
+                <li>Accept all default environment prompts by hitting <code>Enter</code>.</li>
+            </ul>
+
+            <h3>3. Setup as a 24/7 Resilient System Service</h3>
+            <p>This attaches the pipeline engine directly to your Pi's system init files so it runs through power cycles:</p>
+            <pre><code># Install the service links to the system core
+sudo ./svc.sh install
+
+# Fire up the background listener agent
+sudo ./svc.sh start</code></pre>
+        </div>
+
+        <div class="phase-section">
+            <h2>Phase 3: The Automated Pipeline Blueprint</h2>
+            <p>This workflow script maps out the automated terminal actions your Pi executes sequentially upon receiving your code modifications.</p>
+
+            <p>On your <strong>MacBook</strong>, open <code>.github/workflows/deploy.yml</code> and write this script:</p>
+            <pre><code>name: Glep OS Automated Deployment
+
+on:
+  push:
+    branches: [ main ]  # Triggers automation on pushes to the main branch
+
+jobs:
+  deploy:
+    name: Sync and Reload Bot
+    runs-on: self-hosted  # Instructs execution to happen directly on your self-hosted agent
+
+    steps:
+      - name: Checkout Code Base
+        uses: actions/checkout@v4
+
+      - name: Build System Dependencies
+        run: |
+          npm install --omit=dev
+
+      - name: Hot-Reload PM2 Process
+        run: |
+          pm2 restart glep-bot --update-env || pm2 start index.js --name "glep-bot"</code></pre>
+
+            <p>Save the file and push it up via your <strong>MacBook Terminal</strong>:</p>
+            <pre><code>git add .github/workflows/deploy.yml
+git commit -m "pipeline: add seamless pm2 deployment workflow"
+git push origin main</code></pre>
+        </div>
+
+        <div class="phase-section">
+            <h2>Phase 4: Environment Creation & Deployment</h2>
+            <p>With the green deployment pipeline structurally established, configure your private production keys and spin up the runtime process.</p>
+
+            <h3>1. Inject Hidden App Credentials</h3>
+            <p>Because your bot token is rightfully hidden via git configurations, write it manually within the active workspace on your <strong>Raspberry Pi</strong>:</p>
+            <pre><code># Navigate directly to the new workspace directory built by the runner app
+cd ~/actions-runner/_work/glep/glep
+
+# Create the production environment variables file
+nano .env</code></pre>
+
+            <p>Inside the nano terminal editor, type your application secrets out cleanly:</p>
+            <pre><code>TOKEN=YOUR_REAL_DISCORD_BOT_TOKEN_HERE</code></pre>
+            <p><em>Save and close out of the screen by pressing <code>CTRL + O</code>, <code>Enter</code>, and <code>CTRL + X</code>.</em></p>
+
+            <h3>2. Initialize Runtime Operation in PM2 Memory</h3>
+            <p>Clear out old, cached pointers and launch your process profile fresh on Node 22:</p>
+            <pre><code># Erase old process memory blocks
+pm2 delete glep-bot
+
+# Fire up the bot profile with dynamic tracking enabled
+pm2 start index.js --name "glep-bot" --update-env
+
+# Lock the operational state table to survive system reboots
+pm2 save</code></pre>
+
+            <div class="warn-note">
+                <strong>Deployment Check:</strong> Run <code>pm2 logs glep-bot --lines 20</code> to confirm a clean boot process. Your application will now sit proudly active and green on your Discord servers.
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Glep OS Infrastructure Guide • Built for Node 22 & PM2 Runtime Architectures</p>
+        </div>
     </div>
-
-    <footer>
-        <p>Gleps Core System Infrastructure Documentation File • Generated Reference Module</p>
-    </footer>
-</div>
 
 </body>
 </html>
