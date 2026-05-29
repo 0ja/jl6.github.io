@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gleps Blueprint</title>
+    <style>
+        :root {
+            --bg-main: #0d1117;
+            --bg-card: #161b22;
+            --border-color: #30363d;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent-glow: #00ffea;
+            --accent-green: #7ee787;
+            --code-bg: #010409;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+        }
+
+        header h1 {
+            color: #ffffff;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(0, 255, 234, 0.2);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .highlight {
+            color: var(--accent-glow);
+            font-weight: 600;
+        }
+
+        .section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section h2::before {
+    
+            color: var(--accent-glow);
+        }
+
+        .step-list {
+            list-style: none;
+        }
+
+        .step-item {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 20px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .badge-mac { background-color: #238636; color: #ffffff; }
+        .badge-pi { background-color: #1f6feb; color: #ffffff; }
+        .badge-github { background-color: #6e7681; color: #ffffff; }
+
+        code, pre {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9rem;
+            background-color: var(--code-bg);
+            border-radius: 6px;
+        }
+
+        code {
+            padding: 0.2rem 0.4rem;
+            color: #ff79c6;
+        }
+
+        pre {
+            padding: 1rem;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            margin: 0.75rem 0;
+            color: #e6edf3;
+        }
+
+        .comment { color: var(--text-muted); }
+        .keyword { color: #ff79c6; }
+        .string { color: #a5d6ff; }
+
+        .pipeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .pipe-node {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .pipe-arrow {
+            color: var(--accent-glow);
+            font-size: 1.2rem;
+            padding: 0 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simple Deployment Guide</h1>
+        <p>Reference guide for updating the bot globally via <span class="highlight">git push</span> execution loops</p>
+    </header>
+
+    <div class="section">
+        <h2>The Architecture Flow</h2>
+        <div class="pipeline">
+            <div class="pipe-node" style="border-color: var(--accent-green);">MacBook Air<br><span style="font-size:0.75rem; color:var(--text-muted);">Local Code Commit</span></div>
+            <div class="pipe-arrow">➔</div>
+            <div class="pipe-node">GitHub Remote<br><span style="font-size:0.75rem; color:var(--text-muted);">Workflow Event Trigger</span></div>
+            <div class="pipe-arrow">➔</div>
+            <div class="pipe-node" style="border-color: var(--accent-glow);">Raspberry Pi<br><span style="font-size:0.75rem; color:var(--text-muted);">Self-Hosted Runner Sync</span></div>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+            <strong>Security Rule:</strong> No ports are open on the local router. The Raspberry Pi worker initiates outward polling long-connections to GitHub's secure messaging queue socket automatically.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Step 1: Raspberry Pi Runner Setup</h2>
+        <ul class="step-list">
+            <li class="step-item">
+                <span class="badge badge-pi">Raspberry Pi Terminal</span>
+                <div class="step-title">1. Create Execution Space & Extract Runner Packages</div>
+                <p>Run this configuration layout inside your home folder directory:</p>
+                <pre>mkdir actions-runner && cd actions-runner
+
+<span class="comment"># Pull official ARM64 background runner source</span>
+curl -o actions-runner-linux-arm64-2.317.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.317.0/actions-runner-linux-arm64-2.317.0.tar.gz
+
+<span class="comment"># Unpack binaries</span>
+tar xzf ./actions-runner-linux-arm64-2.317.0.tar.gz</pre>
+            </li>
+            <li class="step-item">
+                <span class="badge badge-github">GitHub UI ➔ Pi Terminal</span>
+                <div class="step-title">2. Register Machine Signature Mapping</div>
+                <p>Navigate to <code>Settings ➔ Actions ➔ Runners</code> on GitHub, click <strong>New Self-Hosted Runner</strong>, and run your customized token sequence link:</p>
+                <pre>./config.sh --url https://github.com/jl6/glep --token <span class="string">YOUR_RUNNER_REGISTRATION_TOKEN</span></pre>
+            </li>
+            <li class="step-item">
+                <span class="badge badge-pi">Raspberry Pi Terminal</span>
+                <div class="step-title">3. Establish Permanent System Service Daemon</div>
+                <p>Install the process hook into systemd scripts so it executes automatically when the Pi boots up:</p>
+                <pre>sudo ./svc.sh install
+sudo ./svc.sh start</pre>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Phase 2: MacBook Repository Rules</h2>
+        <ul class="step-list">
+            <li class="step-item">
+                <span class="badge badge-mac">MacBook Workspace</span>
+                <div class="step-title">1. Generate Hidden Folder Trees</div>
+                <p>Inside the root execution path of your local <code>glep</code> bot repo directory, create the target automation mapping folder:</p>
+                <pre>mkdir -p .github/workflows</pre>
+            </li>
+            <li class="step-item">
+                <span class="badge badge-mac">MacBook Workspace</span>
+                <div class="step-title">2. Write the Script Blueprint (deploy.yml)</div>
+                <p>Create a file named <code>deploy.yml</code> exactly inside that hidden folder chain and paste this automation script block:</p>
+                <pre><span class="keyword">name:</span> Glep Automated Deployment
+
+<span class="keyword">on:</span>
+  <span class="keyword">push:</span>
+    <span class="keyword">branches:</span> [ main ]
+
+<span class="keyword">jobs:</span>
+  <span class="keyword">deploy:</span>
+    <span class="keyword">runs-on:</span> self-hosted
+
+    <span class="keyword">steps:</span>
+      - <span class="keyword">name:</span> Checkout Code Base
+        <span class="keyword">uses:</span> actions/checkout@v4
+
+      - <span class="keyword">name:</span> Clear and Install Production Dependencies
+        <span class="keyword">run:</span> |
+          npm ci --only=production
+
+      - <span class="keyword">name:</span> Hot-Reload PM2 Process
+        <span class="keyword">run:</span> |
+          pm2 restart glep --update-env || pm2 start index.js --name "glep"</pre>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>The Daily Production Loop</h2>
+        <p style="margin-bottom: 1rem;">From this point forward, your workflow strictly consists of your local MacBook terminal execution paths. Drop your SSH software entirely.</p>
+        <pre><span class="comment"># 1. Stage any modified tracking files</span>
+git add .
+
+<span class="comment"># 2. Commit the changes to your local system timeline</span>
+git commit -m "Updated scan module logic definitions"
+
+<span class="comment"># 3. Fire the pipeline (Pi self-reloads in background automatically)</span>
+git push origin main</pre>
+    </div>
+
+    <footer>
+        <p>Gleps Core System Infrastructure Documentation File • Generated Reference Module</p>
+    </footer>
+</div>
+
+</body>
+</html>
