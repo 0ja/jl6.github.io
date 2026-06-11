@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MailBot | Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        body { font-family: 'JetBrains+Mono', monospace; background-color: #000; color: #94a3b8; }
+        .glass { border: 1px solid rgba(16, 185, 129, 0.2); background: rgba(0, 0, 0, 0.8); }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <main class="max-w-4xl mx-auto space-y-12">
+        <!-- Header -->
+        <header class="text-center md:text-left">
+            <h1 class="text-3xl text-emerald-400 font-bold uppercase tracking-tighter">Mail#0049</h1>
+            <p class="text-sm text-emerald-500/60 mt-1 uppercase tracking-widest">// Default Prefix [.]</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="sticky top-4 z-50 glass border-b border-emerald-500/20 py-4 px-6 rounded-lg backdrop-blur-md">
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-[10px] uppercase tracking-widest text-slate-400">
+                <a href="#commands" class="hover:text-emerald-400 transition">Commands</a>
+                <a href="#faq" class="hover:text-emerald-400 transition">FAQ</a>
+                <a href="#privacy" class="hover:text-emerald-400 transition">Privacy</a>
+                <a href="#legal" class="hover:text-emerald-400 transition">TOS</a>
+            </div>
+        </nav>
+
+        <!-- Command Sections -->
+        <section id="commands" class="space-y-6">
+            <h2 class="text-emerald-500 uppercase tracking-widest font-bold flex items-center gap-3">
+                <i class="fa-solid fa-terminal"></i> Configuration & Management
+            </h2>
+            
+            <!-- Setup Block -->
+            <div class="glass p-6 rounded-lg border border-emerald-500/20">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-emerald-500 font-bold">$</span>
+                    <code class="text-white font-mono bg-white/5 px-3 py-1 rounded border border-white/10">.setup [Category-ID] [Log-Channel-ID]</code>
+                </div>
+                <p class="text-slate-400 text-sm leading-relaxed border-l-2 border-emerald-500/20 pl-4">
+                    Initializes the bot. Threads are created automatically for staff. Transcripts are generated on close, and idle tickets auto-archive after 24h.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Lifecycle Commands -->
+                <div class="space-y-4">
+                    <div class="bg-black/40 p-4 rounded border border-emerald-500/5 hover:border-emerald-500/20 transition-colors">
+                        <code class="text-emerald-400 font-bold block mb-1">.reply [msg]</code>
+                        <p class="text-[11px] text-slate-500">Send response to user.</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded border border-emerald-500/5 hover:border-emerald-500/20 transition-colors">
+                        <code class="text-emerald-400 font-bold block mb-1">.close</code>
+                        <p class="text-[11px] text-slate-500">Resolve ticket & archive.</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded border border-emerald-500/5 hover:border-emerald-500/20 transition-colors">
+                        <code class="text-emerald-400 font-bold block mb-1">.dashboard</code>
+                        <p class="text-[11px] text-slate-500">View ticket logs & status.</p>
+                    </div>
+                </div>
+
+                <!-- Admin/Utility -->
+                <div class="space-y-4">
+                    <div class="bg-black/40 p-4 rounded border border-emerald-500/5">
+                        <code class="text-emerald-400 font-bold block mb-1">.tag [create/view/delete]</code>
+                        <p class="text-[11px] text-slate-500">Manage response templates.</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded border border-red-500/10">
+                        <code class="text-red-400 font-bold block mb-1">.blacklist [User-ID]</code>
+                        <p class="text-[11px] text-slate-500">Prevent ticket spamming.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ, Legal, Privacy Section (standardized) -->
+        <section id="faq" class="glass p-8 rounded-lg">
+            <h2 class="text-emerald-500 mb-6 uppercase">// Frequently Asked Questions</h2>
+            <div class="grid md:grid-cols-2 gap-8 text-sm">
+                <div>
+                    <p class="font-bold text-white mb-2">Is it free?</p>
+                    <p class="text-slate-400">Yes, MailBot is free forever. No monetization.</p>
+                </div>
+                <div>
+                    <p class="font-bold text-white mb-2">Where is data stored?</p>
+                    <p class="text-slate-400">Locally on private, self-hosted Raspberry Pi infrastructure.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="legal" class="glass p-8 rounded-lg text-sm text-slate-400">
+            <h2 class="text-emerald-500 mb-6 uppercase">// TOS & Privacy</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <p>By using MailBot, you agree to our "As-Is" service terms. We do not sell data; logs are held locally and are only accessible by server staff.</p>
+                <p>Data includes User IDs and ticket metadata. You may request history deletion via your server administrator at any time.</p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
