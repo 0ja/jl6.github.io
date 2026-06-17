@@ -261,7 +261,7 @@
                         
                         const description = descMatch ? descMatch[1] : "Metadata missing.";
                         // Force usage to lowercase
-                        const rawUsage = usageMatch ? usageMatch[1] : `!${file.name.replace('.js', '')}`;
+                        const rawUsage = usageMatch ? usageMatch[1] : `_${file.name.replace('.js', '')}`;
                         const usage = rawUsage.toLowerCase();
 
                         const card = document.createElement('div');
