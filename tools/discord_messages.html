@@ -5,169 +5,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DISCORD GEN | J_Projects</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
         body { font-family: 'JetBrains+Mono', monospace; }
-
-        .scanline {
-            width: 100%;
-            height: 100px;
-            z-index: 10;
-            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(16, 185, 129, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
-            opacity: 0.1;
-            position: absolute;
-            bottom: 100%;
-            animation: scanline 8s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes scanline {
-            0% { bottom: 100%; }
-            100% { bottom: -100px; }
-        }
-
-        .terminal-grid {
-            background-image: radial-gradient(circle, #10b981 1px, transparent 1px);
-            background-size: 30px 30px;
-            opacity: 0.03;
-        }
-
-        .preserve-3d { transform-style: preserve-3d; perspective: 1000px; }
-        .inner-content { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         
-        /* Custom Input Styling */
-        input, textarea, select {
-            background: rgba(0, 0, 0, 0.6) !important;
-            border: 1px solid rgba(16, 185, 129, 0.2) !important;
+        /* Custom Modern Minimal Text Area fields */
+        input[type="text"], input[type="url"], textarea, select {
+            background: transparent !important;
+            border: none !important;
+            border-bottom: 1px solid #18181b !important;
             border-radius: 0px !important;
-            color: white !important;
-            font-size: 10px !important;
-            padding: 12px !important;
-            transition: all 0.3s ease !important;
+            color: #e4e4e7 !important;
+            font-size: 12px !important;
+            padding: 10px 0px !important;
+            transition: border-color 0.3s ease !important;
         }
         
         input:focus, textarea:focus, select:focus {
             outline: none !important;
-            border-color: rgba(16, 185, 129, 0.6) !important;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+            border-color: #52525b !important;
         }
 
         .hidden { display: none !important; }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #10b981; }
+        ::-webkit-scrollbar { width: 2px; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; }
     </style>
 </head>
-<body class="bg-black text-slate-300 min-h-screen overflow-x-hidden selection:bg-emerald-500/30 selection:text-emerald-400">
+<body class="bg-[#0a0a0a] text-zinc-400 min-h-screen selection:bg-zinc-800 selection:text-white antialiased">
 
-    <div class="fixed inset-0 pointer-events-none">
-        <div class="scanline"></div>
-        <div class="absolute inset-0 terminal-grid"></div>
-    </div>
-
-    <div class="max-w-6xl mx-auto px-6 py-12 relative z-20">
+    <div class="max-w-5xl mx-auto px-8 py-20">
         
-        <!-- HEADER -->
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8 border-b border-emerald-500/20 pb-12">
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-24 gap-6">
             <div>
-                <a href="../index.html" class="text-[10px] font-bold text-emerald-500/60 uppercase tracking-[0.4em] hover:text-emerald-400 transition-all flex items-center gap-2 mb-4">
-                    <i class="fa-solid fa-chevron-left"></i> BACK
+                <a href="../index.html" class="text-[10px] tracking-widest text-zinc-600 hover:text-zinc-400 transition-colors block mb-3">
+                    [ back_to_index ]
                 </a>
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-emerald-400 uppercase cursor-default">
-                    DISCORD_<span class="text-white">GEN</span>
+                <h1 class="text-2xl font-bold tracking-tight text-zinc-100">
+                    discord_<span class="text-zinc-500 font-normal">gen</span>
                 </h1>
             </div>
 
-            <div class="text-right">
-                <button onclick="sendMessage()" class="bg-emerald-500 hover:bg-emerald-400 text-black font-black text-[10px] px-8 py-4 uppercase tracking-[0.2em] transition-all">
-                    [ SEND ]
+            <div class="flex flex-col sm:items-end gap-2">
+                <button onclick="sendMessage()" class="text-[10px] text-zinc-500 hover:text-emerald-400 tracking-[0.4em] font-bold uppercase border border-zinc-900 px-8 py-3 transition-colors bg-zinc-950/20">
+                    [ TRANSMIT ]
                 </button>
+                <div id="statusDisplay" class="text-[9px] tracking-widest uppercase font-bold text-zinc-700 h-4">
+                    ready_state
+                </div>
             </div>
         </header>
 
-        <main class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-16">
             
-            <!-- LEFT COLUMN: CONFIG -->
-            <div class="lg:col-span-4 space-y-6">
-                <div class="bg-zinc-950/50 border border-emerald-500/20 p-8 preserve-3d">
-                    <div class="inner-content">
-                        <label class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-4 italic">WEBHOOK</label>
-                        <input type="text" id="webhookUrl" placeholder="https://discord.com/api/webhooks/..." class="w-full mb-6">
-                        
-                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-4 italic">MESSAGE TYPE</label>
-                        <select id="msgType" onchange="toggleMode()" class="w-full">
-                            <option value="text">PLAIN TEXT (STANDARD)</option>
-                            <option value="embed">RICH EMBED (ADVANCED)</option>
-                        </select>
-                    </div>
+            <div class="lg:col-span-4 space-y-12">
+                
+                <div class="space-y-3">
+                    <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">Webhook Interface Link</label>
+                    <input type="text" id="webhookUrl" placeholder="https://discord.com/api/webhooks/..." class="w-full">
                 </div>
+
+                <div class="space-y-3 pt-6 border-t border-zinc-900">
+                    <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">Payload Type</label>
+                    <select id="msgType" onchange="toggleMode()" class="w-full cursor-pointer">
+                        <option value="text">PLAIN STRING FORMAT (STANDARD)</option>
+                        <option value="embed">RICH METADATA EMBED (ADVANCED)</option>
+                    </select>
+                </div>
+                
             </div>
 
-            <!-- RIGHT COLUMN: CONTENT EDITOR -->
             <div class="lg:col-span-8">
                 
-                <!-- TEXT SECTION -->
-                <div id="textSection" class="bg-zinc-950/50 border border-emerald-500/20 p-8 preserve-3d">
-                    <div class="inner-content">
-                        <label class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-4 italic">MESSAGE CONTENT</label>
-                        <textarea id="content" rows="12" placeholder="Input raw message string..." class="w-full font-mono"></textarea>
+                <div id="textSection" class="space-y-4">
+                    <div class="border-b border-zinc-900 pb-2">
+                        <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Message Block Payload</span>
                     </div>
+                    <textarea id="content" rows="10" placeholder="Input structural string content..." class="w-full font-mono resize-none"></textarea>
                 </div>
 
-                <!-- EMBED SECTION -->
-                <div id="embedSection" class="hidden bg-zinc-950/50 border border-emerald-500/20 p-8 preserve-3d">
-                    <div class="inner-content grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="md:col-span-2">
-                            <label class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-4 italic">EMBED TITLE</label>
-                            <input type="text" id="eTitle" placeholder="Heading" class="w-full">
+                <div id="embedSection" class="hidden space-y-10">
+                    <div class="border-b border-zinc-900 pb-2">
+                        <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Metadata Embed Matrix</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div class="md:col-span-2 space-y-2">
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Embed Title</label>
+                            <input type="text" id="eTitle" placeholder="Data heading value" class="w-full">
                         </div>
 
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-4 italic">VISUAL THEME</label>
-                            <div class="flex items-center gap-4">
-                                <input type="color" id="eColor" value="#10b981" class="!w-16 !h-10 cursor-pointer">
-                                <label class="text-[9px] text-slate-500 flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" id="randomColor" class="!p-0"> RANDOMIZE
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Visual Accent Theme</label>
+                            <div class="flex items-center gap-4 py-2">
+                                <input type="color" id="eColor" value="#10b981" class="w-12 h-6 cursor-pointer bg-transparent border-none">
+                                <label class="text-[10px] text-zinc-600 flex items-center gap-2 cursor-pointer select-none">
+                                    <input type="checkbox" id="randomColor" class="accent-emerald-500"> RANDOMIZE
                                 </label>
                             </div>
                         </div>
 
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-4 italic">AUTHOR NAME</label>
-                            <input type="text" id="eAuthor" placeholder="Display Name" class="w-full">
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Author Alias</label>
+                            <input type="text" id="eAuthor" placeholder="System user tracking name" class="w-full">
                         </div>
 
-                        <div class="md:col-span-2">
-                            <label class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-4 italic">DESCRIPTION</label>
-                            <textarea id="eDesc" rows="4" placeholder="Main embed content..." class="w-full"></textarea>
+                        <div class="md:col-span-2 space-y-2">
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Main Body Description</label>
+                            <textarea id="eDesc" rows="4" placeholder="Inject core documentation content blocks..." class="w-full resize-none"></textarea>
                         </div>
 
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-4 italic">THUMBNAIL URL</label>
-                            <input type="url" id="eThumb" placeholder="https://image.path" class="w-full">
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Thumbnail Asset Source URL</label>
+                            <input type="url" id="eThumb" placeholder="https://resource.path/image.png" class="w-full">
                         </div>
 
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-4 italic">IMAGE URL</label>
-                            <input type="url" id="eImage" placeholder="https://image.path" class="w-full">
+                        <div class="space-y-2">
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Hero Image Source URL</label>
+                            <input type="url" id="eImage" placeholder="https://resource.path/banner.jpg" class="w-full">
                         </div>
 
-                        <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-emerald-500/10">
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-4 italic">FOOTER TEXT</label>
-                                <input type="text" id="eFooter" placeholder="System tag..." class="w-full">
+                        <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-zinc-900">
+                            <div class="space-y-2">
+                                <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Footer Metadata Text</label>
+                                <input type="text" id="eFooter" placeholder="System structural parameters..." class="w-full">
                             </div>
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-4 italic">FOOTER ICON</label>
-                                <input type="url" id="eFooterIcon" placeholder="https://image.path" class="w-full">
+                            <div class="space-y-2">
+                                <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Footer Icon Asset URL</label>
+                                <input type="url" id="eFooterIcon" placeholder="https://resource.path/icon.png" class="w-full">
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </main>
+
+        <footer class="mt-36 pt-8 border-t border-zinc-900 text-[11px] text-zinc-600 flex flex-col sm:flex-row justify-between gap-4">
+            <p>network execution proxy // unverified</p>
+            <p>ensure strict authorization verification structures match endpoint criteria parameters.</p>
+        </footer>
+
     </div>
 
     <script>
@@ -201,8 +179,8 @@
             const status = document.getElementById('statusDisplay');
             
             if (!url.startsWith('https://discord.com/api/webhooks/')) {
-                status.innerText = "ERROR: INVALID_WEBHOOK_URL";
-                status.style.color = "#ef4444";
+                status.innerText = "fail: invalid_webhook";
+                status.className = "text-[9px] tracking-widest uppercase font-bold text-rose-500";
                 return;
             }
 
@@ -210,13 +188,17 @@
 
             if (type === 'text') {
                 payload.content = document.getElementById('content').value;
-                if (!payload.content.trim()) return alert("CONTENT_REQUIRED");
+                if (!payload.content.trim()) {
+                    status.innerText = "fail: empty_payload";
+                    status.className = "text-[9px] tracking-widest uppercase font-bold text-rose-500";
+                    return;
+                }
             } else {
                 let colorDecimal = isRandom ? Math.floor(Math.random() * 16777215) : parseInt(document.getElementById('eColor').value.replace('#', ''), 16) || 0;
 
                 const author = clean({
                     name: document.getElementById('eAuthor').value,
-                    icon_url: document.getElementById('eAuthorIcon') ? document.getElementById('eAuthorIcon').value : "" 
+                    icon_url: "" 
                 });
 
                 const footer = clean({
@@ -234,12 +216,16 @@
                     image: clean({ url: document.getElementById('eImage').value })
                 });
 
-                if (!embed) return alert("EMBED_PARAMETERS_REQUIRED");
+                if (!embed) {
+                    status.innerText = "fail: missing_parameters";
+                    status.className = "text-[9px] tracking-widest uppercase font-bold text-rose-500";
+                    return;
+                }
                 payload.embeds = [embed];
             }
 
-            status.innerText = "TRANSMITTING...";
-            status.style.color = "#10b981";
+            status.innerText = "transmitting_payload...";
+            status.className = "text-[9px] tracking-widest uppercase font-bold text-emerald-400";
 
             try {
                 const response = await fetch(url, {
@@ -249,15 +235,16 @@
                 });
 
                 if (response.ok) {
-                    status.innerText = "SUCCESS: PACKET_DELIVERED";
+                    status.innerText = "success: tracking_logged";
+                    status.className = "text-[9px] tracking-widest uppercase font-bold text-emerald-400";
                 } else {
                     const errorData = await response.json();
-                    status.innerText = `FAIL: ${errorData.message.toUpperCase()}`;
-                    status.style.color = "#ef4444";
+                    status.innerText = `fail: error_${response.status}`;
+                    status.className = "text-[9px] tracking-widest uppercase font-bold text-rose-500";
                 }
             } catch (err) {
-                status.innerText = "CONNECTION_INTERRUPTED";
-                status.style.color = "#ef4444";
+                status.innerText = "fail: trace_interrupted";
+                status.className = "text-[9px] tracking-widest uppercase font-bold text-rose-500";
             }
         }
     </script>

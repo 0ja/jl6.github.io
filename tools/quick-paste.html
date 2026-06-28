@@ -5,130 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>QUICK PASTE | J_Projects</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+        body { font-family: 'JetBrains Mono', monospace; }
+
+        textarea {
+            background: transparent !important;
+            border: none !important;
+            color: #10b981 !important;
+            font-size: 13px !important;
+            line-height: 1.6 !important;
+            resize: none !important;
+        }
         
-        body { 
-            font-family: 'JetBrains Mono', monospace; 
-            background-color: #000;
-            color: #e2e8f0;
+        textarea:focus {
+            outline: none !important;
         }
 
-        .terminal-grid {
-            background-image: radial-gradient(circle, #10b981 1px, transparent 1px);
-            background-size: 30px 30px;
-            opacity: 0.03;
+        textarea::placeholder {
+            color: #1c1c21 !important;
         }
 
-        .glass-panel {
-            background: rgba(9, 9, 11, 0.8);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        .editor-box {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(16, 185, 129, 0.1);
-            transition: border 0.3s ease;
-        }
-
-        .editor-box:focus-within {
-            border-color: rgba(16, 185, 129, 0.5);
-        }
-
-        #textInput::placeholder {
-            color: rgba(16, 185, 129, 0.3);
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background: #10b981;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 10px #10b981;
-        }
-
-        .action-btn {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .action-btn:hover {
-            background: #10b981;
-            color: #000;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-        }
-
-        /* Custom scrollbar for terminal look */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #10b981; }
-        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar { width: 2px; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; }
     </style>
 </head>
-<body class="min-h-screen overflow-x-hidden p-4 md:p-10">
+<body class="bg-[#0a0a0a] text-zinc-400 min-h-screen selection:bg-zinc-800 selection:text-white antialiased">
 
-    <div class="fixed inset-0 pointer-events-none terminal-grid"></div>
-
-    <div class="max-w-6xl mx-auto relative z-10">
-        <!-- TOP NAV / HEADER -->
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6 border-b border-emerald-500/10 pb-8">
+    <div class="max-w-5xl mx-auto px-8 py-20">
+        
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-24 gap-6">
             <div>
-                <a href="../index.html" class="text-[10px] font-bold text-emerald-500/60 uppercase tracking-[0.4em] hover:text-emerald-400 transition-all flex items-center gap-2 mb-4">
-                    <i class="fa-solid fa-chevron-left text-[8px]"></i> BACK
+                <a href="../index.html" class="text-[10px] tracking-widest text-zinc-600 hover:text-zinc-400 transition-colors block mb-3">
+                    [ back_to_index ]
                 </a>
-                <h1 class="text-4xl font-extrabold tracking-tighter text-emerald-400 uppercase">
-                    PASTE_<span class="text-white">YOUR CODE</span>
+                <h1 class="text-2xl font-bold tracking-tight text-zinc-100">
+                    paste_<span class="text-zinc-500 font-normal">your_code</span>
                 </h1>
             </div>
 
-            <div class="flex gap-4 w-full md:w-auto">
-                <button onclick="downloadFile()" class="action-btn flex-1 md:flex-none border border-emerald-500/30 px-6 py-3 text-[10px] font-black uppercase tracking-widest bg-emerald-500/5">
-                    EXPORT
+            <div class="flex flex-wrap gap-4 w-full sm:w-auto">
+                <button onclick="downloadFile()" class="text-[10px] text-zinc-500 hover:text-zinc-300 tracking-widest font-medium uppercase border border-zinc-900 px-6 py-3 transition-colors bg-zinc-950/20 flex-1 sm:flex-none">
+                    [ EXPORT ]
                 </button>
-                <button onclick="clearEditor()" class="action-btn flex-1 md:flex-none border border-red-500/30 px-6 py-3 text-[10px] font-black uppercase tracking-widest bg-red-500/5 text-red-400 hover:bg-red-500 hover:text-white">
-                    ERASE
+                <button onclick="clearEditor()" class="text-[10px] text-zinc-600 hover:text-rose-400 tracking-widest font-medium uppercase border border-zinc-900 px-6 py-3 transition-colors bg-zinc-950/20 flex-1 sm:flex-none">
+                    [ ERASE ]
                 </button>
             </div>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-16">
             
-            <!-- ALERT / SYSTEM INFO -->
             <div class="lg:col-span-3 space-y-6">
-                <div class="glass-panel p-6 border-l-4 border-l-emerald-500">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fa-solid fa-triangle-exclamation text-emerald-500 text-xs"></i>
-                        <h2 class="text-[10px] font-black uppercase tracking-[0.2em]">Memory State</h2>
-                    </div>
-                    <p class="text-[10px] text-slate-500 leading-relaxed uppercase">
-                    Refreshing the browser will purge all current payload data from local memory.
+                <div class="space-y-2 border-l border-zinc-800 pl-4 py-1">
+                    <span class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">Memory State</span>
+                    <p class="text-xs text-zinc-500 leading-relaxed">
+                        Refreshing the runtime interface purges the volatile container cache instantly.
                     </p>
-                </div>
                 </div>
             </div>
 
-            <!-- EDITOR AREA -->
-            <div class="lg:col-span-9">
-                <div class="editor-box rounded-sm flex flex-col h-[65vh] min-h-[400px]">
-                    <div class="flex items-center gap-4 bg-zinc-950/80 px-6 py-3 border-b border-white/5">
-                        <div class="flex gap-1.5">
-                            <div class="w-2 h-2 rounded-full bg-red-500/20"></div>
-                            <div class="w-2 h-2 rounded-full bg-amber-500/20"></div>
-                            <div class="w-2 h-2 rounded-full bg-emerald-500/20"></div>
-                        </div>
-                        <span class="text-[9px] font-bold text-slate-600 uppercase tracking-widest italic">PASTE TXT</span>
-                    </div>
+            <div class="lg:col-span-9 space-y-4">
+                <div class="border-b border-zinc-900 pb-2">
+                    <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">active_text_buffer</span>
+                </div>
+                
+                <div class="bg-zinc-950/10 rounded border border-zinc-950 flex flex-col h-[55vh] min-h-[400px]">
+                    <textarea id="textInput" placeholder="> awaiting_text_or_payload_input..." class="w-full h-full p-6 focus:outline-none flex-1"></textarea>
                     
-                    <textarea id="textInput" placeholder="> READY_FOR_INPUT..." 
-                        class="flex-1 bg-transparent border-none text-emerald-400 p-8 text-[13px] leading-relaxed focus:outline-none resize-none selection:bg-emerald-500/30"></textarea>
-                    
-                    <div class="bg-zinc-950/80 px-8 py-4 border-t border-white/5 flex justify-between items-center">
-                        <div id="charCount" class="text-[9px] font-black text-slate-500 tracking-[0.2em]">0 CHARS</div>
+                    <div class="px-6 py-3 border-t border-zinc-950 flex justify-between items-center bg-zinc-950/20">
+                        <div id="charCount" class="text-[10px] text-zinc-600 tracking-wider font-mono uppercase transition-colors">0_chars</div>
                     </div>
                 </div>
             </div>
-        </div>
+
+        </main>
+
+        <footer class="mt-36 pt-8 border-t border-zinc-900 text-[11px] text-zinc-600 flex flex-col sm:flex-row justify-between gap-4">
+            <p>temporary clipboard interface // active_sandbox</p>
+            <p>all local properties are stored entirely inside active viewport stack arrays.</p>
+        </footer>
+
     </div>
 
     <script>
@@ -137,26 +94,26 @@
 
         textarea.addEventListener('input', () => {
             const count = textarea.value.length;
-            charCountDisplay.innerText = `${count.toLocaleString()}_CHARS`;
+            charCountDisplay.innerText = `${count.toLocaleString()}_chars`;
             
             if (count > 0) {
-                charCountDisplay.classList.replace('text-slate-500', 'text-emerald-500');
+                charCountDisplay.className = "text-[10px] text-emerald-500 tracking-wider font-mono uppercase font-bold";
             } else {
-                charCountDisplay.classList.replace('text-emerald-500', 'text-slate-500');
+                charCountDisplay.className = "text-[10px] text-zinc-600 tracking-wider font-mono uppercase";
             }
         });
 
         function clearEditor() {
-            if (confirm("CRITICAL: Wipe entire buffer content?")) {
+            if (confirm("Confirm clearing buffer contents?")) {
                 textarea.value = '';
-                charCountDisplay.innerText = '0_CHARS';
-                charCountDisplay.classList.replace('text-emerald-500', 'text-slate-500');
+                charCountDisplay.innerText = '0_chars';
+                charCountDisplay.className = "text-[10px] text-zinc-600 tracking-wider font-mono uppercase";
             }
         }
 
         function downloadFile() {
             if (!textarea.value.trim()) {
-                alert("PROTOCOL_ERROR: Buffer is empty.");
+                alert("Action cancelled: Text content buffer is currently unpopulated.");
                 return;
             }
             const blob = new Blob([textarea.value], { type: 'text/plain' });
