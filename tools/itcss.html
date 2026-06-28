@@ -62,25 +62,12 @@
         <main class="grid grid-cols-1 lg:grid-cols-12 gap-16">
             
             <div class="lg:col-span-4 space-y-12">
-                
-                <div class="space-y-4">
-                    <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">01 / Source Identity</label>
-                    <input type="file" id="upload" accept="image/*" class="w-full text-xs text-zinc-600 file:mr-4">
-                </div>
-
                 <div class="space-y-4 pt-6 border-t border-zinc-900">
                     <div class="flex justify-between text-[10px] uppercase tracking-widest text-zinc-500 font-bold">
-                        <span>02 / Pixel Matrix Scale</span>
+                        <span>02 Size</span>
                         <span id="scaleVal" class="text-zinc-400">1px</span>
                     </div>
                     <input type="range" id="scale" min="1" max="20" value="1" class="w-full h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer">
-                </div>
-
-                <div class="pt-6 border-t border-zinc-900 space-y-2">
-                    <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold block">Pipeline Note</span>
-                    <p class="text-xs text-zinc-500 leading-relaxed">
-                        Transforms graphical data pixels into raw custom <code class="text-zinc-400 font-mono">box-shadow</code> mapping arrays. Heavy source targets degrade render engine speeds.
-                    </p>
                 </div>
             </div>
 
@@ -88,29 +75,14 @@
                 
                 <div class="space-y-4">
                     <div class="border-b border-zinc-900 pb-2">
-                        <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Dynamic Raster Stage</span>
+                        <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Your image will show here</span>
                     </div>
                     <div class="min-h-[300px] max-h-[500px] bg-zinc-950/20 rounded border border-zinc-950 flex items-center justify-center p-12 overflow-auto">
                         <div id="css-pixel"></div>
                     </div>
                 </div>
-
-                <div class="space-y-4 pt-4 border-t border-zinc-900">
-                    <div class="border-b border-zinc-950 pb-2">
-                        <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Compiled Properties</span>
-                    </div>
-                    <textarea id="css-code" readonly placeholder="awaiting_raster_data_injection..." 
-                        class="w-full h-32 bg-transparent border-none text-xs text-zinc-500 font-mono focus:outline-none resize-none placeholder:text-zinc-700"></textarea>
-                </div>
-
             </div>
         </main>
-
-        <footer class="mt-36 pt-8 border-t border-zinc-900 text-[11px] text-zinc-600 flex flex-col sm:flex-row justify-between gap-4">
-            <p>processing pipeline // clientside_only</p>
-            <p>recommended dimensional threshold: &lt; 80px horizontal axis bounds.</p>
-        </footer>
-
     </div>
 
     <script>
@@ -201,3 +173,6 @@
     </script>
 </body>
 </html>
+
+
+<!--export is broken-->

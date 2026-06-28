@@ -61,15 +61,15 @@
             <div class="lg:col-span-4 space-y-12">
                 
                 <div class="space-y-3">
-                    <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">Webhook Interface Link</label>
+                    <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">Webhook Link</label>
                     <input type="text" id="webhookUrl" placeholder="https://discord.com/api/webhooks/..." class="w-full">
                 </div>
 
                 <div class="space-y-3 pt-6 border-t border-zinc-900">
-                    <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">Payload Type</label>
+                    <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">Type</label>
                     <select id="msgType" onchange="toggleMode()" class="w-full cursor-pointer">
-                        <option value="text">PLAIN STRING FORMAT (STANDARD)</option>
-                        <option value="embed">RICH METADATA EMBED (ADVANCED)</option>
+                        <option value="text">Normal Text</option>
+                        <option value="embed">Rich Embed</option>
                     </select>
                 </div>
                 
@@ -79,24 +79,24 @@
                 
                 <div id="textSection" class="space-y-4">
                     <div class="border-b border-zinc-900 pb-2">
-                        <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Message Block Payload</span>
+                        <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Message</span>
                     </div>
-                    <textarea id="content" rows="10" placeholder="Input structural string content..." class="w-full font-mono resize-none"></textarea>
+                    <textarea id="content" rows="10" placeholder="Message" class="w-full font-mono resize-none"></textarea>
                 </div>
 
                 <div id="embedSection" class="hidden space-y-10">
                     <div class="border-b border-zinc-900 pb-2">
-                        <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Metadata Embed Matrix</span>
+                        <span class="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Costume Embed</span>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                         <div class="md:col-span-2 space-y-2">
                             <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Embed Title</label>
-                            <input type="text" id="eTitle" placeholder="Data heading value" class="w-full">
+                            <input type="text" id="eTitle" placeholder="Title" class="w-full">
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Visual Accent Theme</label>
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Color</label>
                             <div class="flex items-center gap-4 py-2">
                                 <input type="color" id="eColor" value="#10b981" class="w-12 h-6 cursor-pointer bg-transparent border-none">
                                 <label class="text-[10px] text-zinc-600 flex items-center gap-2 cursor-pointer select-none">
@@ -106,32 +106,32 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Author Alias</label>
-                            <input type="text" id="eAuthor" placeholder="System user tracking name" class="w-full">
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Author</label>
+                            <input type="text" id="eAuthor" placeholder="Author" class="w-full">
                         </div>
 
                         <div class="md:col-span-2 space-y-2">
-                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Main Body Description</label>
-                            <textarea id="eDesc" rows="4" placeholder="Inject core documentation content blocks..." class="w-full resize-none"></textarea>
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Description</label>
+                            <textarea id="eDesc" rows="4" placeholder="description" class="w-full resize-none"></textarea>
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Thumbnail Asset Source URL</label>
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Thumbnail URL</label>
                             <input type="url" id="eThumb" placeholder="https://resource.path/image.png" class="w-full">
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Hero Image Source URL</label>
+                            <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Image Source URL</label>
                             <input type="url" id="eImage" placeholder="https://resource.path/banner.jpg" class="w-full">
                         </div>
 
                         <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-zinc-900">
                             <div class="space-y-2">
-                                <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Footer Metadata Text</label>
+                                <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Footer Text</label>
                                 <input type="text" id="eFooter" placeholder="System structural parameters..." class="w-full">
                             </div>
                             <div class="space-y-2">
-                                <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Footer Icon Asset URL</label>
+                                <label class="text-[10px] text-zinc-500 uppercase tracking-wide block">Footer Icon  URL</label>
                                 <input type="url" id="eFooterIcon" placeholder="https://resource.path/icon.png" class="w-full">
                             </div>
                         </div>
@@ -140,12 +140,6 @@
 
             </div>
         </main>
-
-        <footer class="mt-36 pt-8 border-t border-zinc-900 text-[11px] text-zinc-600 flex flex-col sm:flex-row justify-between gap-4">
-            <p>network execution proxy // unverified</p>
-            <p>ensure strict authorization verification structures match endpoint criteria parameters.</p>
-        </footer>
-
     </div>
 
     <script>

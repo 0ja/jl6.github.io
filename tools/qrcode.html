@@ -83,7 +83,7 @@
                 
                 <div id="controls-encoder" class="space-y-6">
                     <div class="space-y-2">
-                        <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">Input Content String</label>
+                        <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">paste your link or text below</label>
                         <textarea id="urlInput" placeholder="ENTER_URL_OR_DATA..." rows="6" class="w-full font-mono resize-none">https://google.com</textarea>
                     </div>
                     
@@ -94,14 +94,14 @@
 
                 <div id="controls-decoder" class="hidden space-y-6">
                     <div class="space-y-2">
-                        <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block">Capture Analysis</label>
+                        <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block"></label>
                         <p class="text-xs text-zinc-500 leading-relaxed">
-                            Parsing is executed locally. Matrix metadata stays within the sandbox perimeter execution space.
+                          
                         </p>
                     </div>
                     
                     <div id="drop-zone" onclick="document.getElementById('file-input').click()" class="p-12 text-center cursor-pointer rounded">
-                        <p class="text-zinc-500 text-[10px] tracking-widest uppercase font-medium">Select Source Asset Image</p>
+                        <p class="text-zinc-500 text-[10px] tracking-widest uppercase font-medium">upload image</p>
                         <input type="file" id="file-input" hidden accept="image/*">
                     </div>
                 </div>
@@ -123,20 +123,14 @@
                     <div id="decoder-output" class="hidden w-full">
                         <div id="result-area" class="w-full max-w-xl mx-auto p-6 hidden"></div>
                         <div id="placeholder-decoder" class="text-center select-none">
-                            <p class="text-[10px] tracking-[0.4em] text-zinc-700 uppercase font-bold">awaiting_raster_matrix...</p>
-                            <p class="text-[9px] text-zinc-600 mt-2 lowercase">import vector block image signature to extract code array data</p>
+                            <p class="text-[10px] tracking-[0.4em] text-zinc-700 uppercase font-bold">awaiting</p>
+                            <p class="text-[9px] text-zinc-600 mt-2 lowercase"></p>
                         </div>
                     </div>
                     
                 </div>
             </div>
         </main>
-
-        <footer class="mt-36 pt-8 border-t border-zinc-900 text-[11px] text-zinc-600 flex flex-col sm:flex-row justify-between gap-4">
-            <p>cryptographic translation subsystem // matrix_v1.0</p>
-            <p>high-density correction attributes remain fixed globally.</p>
-        </footer>
-
     </div>
 
     <canvas id="canvas" class="hidden"></canvas>
