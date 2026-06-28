@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J | Projects</title>
-    <!-- FAVICON CONFIGURATION -->
     <link rel="icon" type="image/x-icon" href="img/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
-    <!-- Optional: SVG support for perfect scaling on high-DPI screens -->
     <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap');
         
         body { font-family: 'JetBrains+Mono', monospace; }
 
@@ -20,11 +19,11 @@
             width: 100%;
             height: 100px;
             z-index: 10;
-            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(16, 185, 129, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(16, 185, 129, 0.03) 50%, rgba(0, 0, 0, 0) 100%);
             opacity: 0.1;
             position: absolute;
             bottom: 100%;
-            animation: scanline 8s linear infinite;
+            animation: scanline 10s linear infinite;
         }
 
         @keyframes scanline {
@@ -34,249 +33,231 @@
 
         .terminal-grid {
             background-image: radial-gradient(circle, #10b981 1px, transparent 1px);
-            background-size: 30px 30px;
-            opacity: 0.03;
+            background-size: 40px 40px;
+            opacity: 0.02;
         }
 
         .preserve-3d { transform-style: preserve-3d; perspective: 1000px; }
         .inner-content { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .group:hover .inner-content { transform: translateZ(40px); }
+        .group:hover .inner-content { transform: translateZ(30px); }
     </style>
 </head>
-<body class="bg-black text-slate-300 min-h-screen overflow-x-hidden selection:bg-emerald-500/30 selection:text-emerald-400">
+<body class="bg-black text-slate-400 min-h-screen overflow-x-hidden selection:bg-emerald-500/30 selection:text-emerald-400 antialiased">
 
-    <!-- Ambient Overlays -->
     <div class="fixed inset-0 pointer-events-none">
         <div class="scanline"></div>
         <div class="absolute inset-0 terminal-grid"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.8)_100%)]"></div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-6 py-12 relative z-20">
+    <div class="max-w-6xl mx-auto px-6 py-16 relative z-20">
         
-        <!-- HEADER SECTION -->
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8 border-b border-emerald-500/20 pb-12">
-            <div class="flex items-center gap-10">
-                <!-- PROFILE TARGETING UI -->
-                <div class="relative p-2 group">
-                    <div class="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-emerald-500"></div>
-                    <div class="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-emerald-500"></div>
-                    <div class="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-emerald-500"></div>
-                    <div class="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-emerald-500"></div>
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-20 gap-8 border-b border-emerald-500/10 pb-12">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-8">
+                <div class="relative p-2 group cursor-crosshair">
+                    <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-emerald-500/70 group-hover:border-emerald-400 transition-colors"></div>
+                    <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-emerald-500/70 group-hover:border-emerald-400 transition-colors"></div>
+                    <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-emerald-500/70 group-hover:border-emerald-400 transition-colors"></div>
+                    <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-emerald-500/70 group-hover:border-emerald-400 transition-colors"></div>
                     
-                    <div class="overflow-hidden bg-emerald-950/20 border border-emerald-500/20">
-                        <img src="https://github.com/jl6.png" alt="ID" class="w-28 h-28 grayscale group-hover:grayscale-0 transition-all duration-700 opacity-80 group-hover:opacity-100 group-hover:scale-110">
+                    <div class="overflow-hidden bg-emerald-950/10 border border-emerald-500/10 group-hover:border-emerald-500/30 transition-colors">
+                        <img src="https://github.com/jl6.png" alt="ID" class="w-24 h-24 grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100 group-hover:scale-105 object-cover">
                     </div>
                 </div>
 
                 <div>
-                    <h1 class="text-5xl font-extrabold tracking-tighter text-emerald-400 uppercase cursor-default">
-                        J_<span class="text-white">PROJECTS</span>
+                    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-emerald-400 uppercase cursor-default">
+                        J_<span class="text-white font-light opacity-90">PROJECTS</span>
                     </h1>
                     
                     <div class="flex flex-wrap gap-2 mt-4">
-                        <a href="https://github.com/jl6" target="_blank" class="text-[9px] bg-white/5 border border-white/10 px-4 py-1.5 text-white hover:border-emerald-500/50 hover:text-emerald-400 transition-all font-bold tracking-[0.2em] flex items-center gap-2">
-                            <i class="fa-brands fa-github text-[11px]"></i> GITHUB: jl6
+                        <a href="https://github.com/jl6" target="_blank" class="text-[10px] bg-zinc-900/50 border border-emerald-500/10 px-3 py-1.5 text-slate-300 hover:border-emerald-500/40 hover:bg-emerald-950/20 hover:text-emerald-400 transition-all duration-300 font-medium tracking-wider flex items-center gap-2">
+                            <i class="fa-brands fa-github text-xs"></i> jl6
                         </a>
-                        <div class="text-[9px] bg-white/5 border border-white/10 px-4 py-1.5 text-white hover:border-indigo-500/50 transition-all font-bold tracking-[0.2em] flex items-center gap-2">
-                            <i class="fa-brands fa-discord text-[11px]"></i> DISCORD: j7o
+                        <div class="text-[10px] bg-zinc-900/50 border border-emerald-500/10 px-3 py-1.5 text-slate-300 hover:border-indigo-500/40 hover:bg-indigo-950/20 hover:text-indigo-400 transition-all duration-300 font-medium tracking-wider flex items-center gap-2">
+                            <i class="fa-brands fa-discord text-xs"></i> j7o
                         </div>
-                        <a href="https://discord.gg/48t5FWHw4S" target="_blank" class="text-[9px] bg-white/5 border border-white/10 px-4 py-1.5 text-white hover:border-emerald-500/50 hover:text-emerald-400 transition-all font-bold tracking-[0.2em] flex items-center gap-2">
-                            <i class="fa-solid fa-server text-[11px]"></i> SERVER
+                        <a href="https://discord.gg/48t5FWHw4S" target="_blank" class="text-[10px] bg-zinc-900/50 border border-emerald-500/10 px-3 py-1.5 text-slate-300 hover:border-emerald-500/40 hover:bg-emerald-950/20 hover:text-emerald-400 transition-all duration-300 font-medium tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-server text-xs"></i> SERVER
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="text-right">
-                <p class="text-[9px] text-emerald-500/50 uppercase tracking-[0.5em]">error 404 // sleep not foudn</p>
-                <div class="flex gap-1 justify-end mt-2">
-                    <div class="w-1 h-1 bg-emerald-500 animate-pulse"></div>
-                    <div class="w-1 h-1 bg-emerald-500 animate-pulse [animation-delay:0.2s]"></div>
-                    <div class="w-1 h-1 bg-emerald-500 animate-pulse [animation-delay:0.4s]"></div>
+            <div class="text-left md:text-right self-stretch md:self-auto flex md:flex-col justify-between items-center md:items-end border-t md:border-t-0 border-emerald-500/10 pt-4 md:pt-0">
+                <p class="text-[10px] text-emerald-500/40 uppercase tracking-[0.3em] font-medium">status // sleep_not_found</p>
+                <div class="flex gap-1.5 mt-1">
+                    <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse [animation-delay:0.2s]"></div>
+                    <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse [animation-delay:0.4s]"></div>
                 </div>
             </div>
         </header>
 
-        <!-- MAIN PROJECT GRID -->
         <main>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                <!-- Project: Quick Paste -->
-                <a href="tools/quick-paste.html" class="group relative bg-zinc-950/50 border border-emerald-500/20 p-8 hover:border-emerald-400/50 transition-all preserve-3d">
+                <a href="tools/quick-paste.html" class="group relative bg-zinc-950/30 border border-emerald-500/10 p-8 hover:border-emerald-500/40 hover:bg-emerald-950/5 transition-all duration-300 preserve-3d">
                     <div class="inner-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <i class="fa-solid fa-paste text-2xl text-emerald-500/40 group-hover:text-emerald-400"></i>
-                            <span class="text-[9px] text-slate-700 font-bold font-mono">OBJ_001</span>
+                        <div class="flex justify-between items-center mb-6">
+                            <i class="fa-solid fa-paste text-xl text-emerald-500/30 group-hover:text-emerald-400 transition-colors"></i>
+                            <span class="text-[9px] text-zinc-700 font-bold tracking-widest">SYS_001</span>
                         </div>
-                        <h4 class="text-sm font-bold tracking-widest text-white mb-3 uppercase">Quick_Paste</h4>
-                        <p class="text-[10px] text-slate-500 leading-relaxed uppercase">Client-side processing. Your text is never uploaded to a server.</p>
+                        <h4 class="text-sm font-bold tracking-widest text-zinc-100 mb-2 uppercase group-hover:text-emerald-400 transition-colors">Quick_Paste</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors">Client-side processing. Your private text payloads are never uploaded to an external server.</p>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-1 bg-emerald-500/0 group-hover:bg-emerald-500/40 transition-all"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-emerald-500/0 group-hover:bg-emerald-500/50 transition-all duration-300"></div>
                 </a>
 
-                <!-- Project: EPU Generator -->
-                <a href="tools/uep.html" class="group relative bg-zinc-950/50 border border-cyan-500/20 p-8 hover:border-cyan-400/50 transition-all preserve-3d">
+                <a href="tools/uep.html" class="group relative bg-zinc-950/30 border border-cyan-500/10 p-8 hover:border-cyan-500/40 hover:bg-cyan-950/5 transition-all duration-300 preserve-3d">
                     <div class="inner-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <i class="fa-solid fa-key text-2xl text-cyan-500/40 group-hover:text-cyan-400"></i>
-                            <span class="text-[9px] text-slate-700 font-bold font-mono">OBJ_002</span>
+                        <div class="flex justify-between items-center mb-6">
+                            <i class="fa-solid fa-key text-xl text-cyan-500/30 group-hover:text-cyan-400 transition-colors"></i>
+                            <span class="text-[9px] text-zinc-700 font-bold tracking-widest">SYS_002</span>
                         </div>
-                        <h4 class="text-sm font-bold tracking-widest text-white mb-3 uppercase">EPU_Generator</h4>
-                        <p class="text-[10px] text-slate-500 leading-relaxed uppercase">Instantly generate randomized sets of emails, passwords, and usernames.</p>
+                        <h4 class="text-sm font-bold tracking-widest text-zinc-100 mb-2 uppercase group-hover:text-cyan-400 transition-colors">EPU_Generator</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors">Instantly generate structured, randomized sets of secure emails, passwords, and user identities.</p>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-1 bg-cyan-500/0 group-hover:bg-cyan-500/40 transition-all"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-cyan-500/0 group-hover:bg-cyan-500/50 transition-all duration-300"></div>
                 </a>
 
-                <!-- Project: Discord Gen -->
-                <a href="tools/discord_messages.html" class="group relative bg-zinc-950/50 border border-indigo-500/20 p-8 hover:border-indigo-400/50 transition-all preserve-3d">
+                <a href="tools/discord_messages.html" class="group relative bg-zinc-950/30 border border-indigo-500/10 p-8 hover:border-indigo-500/40 hover:bg-indigo-950/5 transition-all duration-300 preserve-3d">
                     <div class="inner-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <i class="fa-brands fa-discord text-2xl text-indigo-500/40 group-hover:text-indigo-400"></i>
-                            <span class="text-[9px] text-slate-700 font-bold font-mono">OBJ_003</span>
+                        <div class="flex justify-between items-center mb-6">
+                            <i class="fa-brands fa-discord text-xl text-indigo-500/30 group-hover:text-indigo-400 transition-colors"></i>
+                            <span class="text-[9px] text-zinc-700 font-bold tracking-widest">SYS_003</span>
                         </div>
-                        <h4 class="text-sm font-bold tracking-widest text-white mb-3 uppercase">Discord_Gen</h4>
-                        <p class="text-[10px] text-slate-500 leading-relaxed uppercase">Fully customize titles, fields, and footers for professional alerts.</p>
+                        <h4 class="text-sm font-bold tracking-widest text-zinc-100 mb-2 uppercase group-hover:text-indigo-400 transition-colors">Discord_Gen</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors">Fully customize message structural fields, titles, and custom footers for developer alerts.</p>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-1 bg-indigo-500/0 group-hover:bg-indigo-500/40 transition-all"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-indigo-500/0 group-hover:bg-indigo-500/50 transition-all duration-300"></div>
                 </a>
 
-                <!-- Project: Invite Bot -->
-                <a href="tools/discord_invite_bot.html" class="group relative bg-zinc-950/50 border border-emerald-500/20 p-8 hover:border-emerald-400/50 transition-all preserve-3d">
+                <a href="tools/discord_invite_bot.html" class="group relative bg-zinc-950/30 border border-emerald-500/10 p-8 hover:border-emerald-500/40 hover:bg-emerald-950/5 transition-all duration-300 preserve-3d">
                     <div class="inner-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <i class="fa-brands fa-discord text-2xl text-emerald-500/40 group-hover:text-emerald-400"></i>
-                            <span class="text-[9px] text-slate-700 font-bold font-mono">OBJ_004</span>
+                        <div class="flex justify-between items-center mb-6">
+                            <i class="fa-brands fa-discord text-xl text-emerald-500/30 group-hover:text-emerald-400 transition-colors"></i>
+                            <span class="text-[9px] text-zinc-700 font-bold tracking-widest">SYS_004</span>
                         </div>
-                        <h4 class="text-sm font-bold tracking-widest text-white mb-3 uppercase">Invite_Bot</h4>
-                        <p class="text-[10px] text-slate-500 leading-relaxed uppercase italic">Generate invite links for Discord bots with custom permissions.</p>
+                        <h4 class="text-sm font-bold tracking-widest text-zinc-100 mb-2 uppercase group-hover:text-emerald-400 transition-colors">Invite_Bot</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors">Generate direct invitation configurations for Discord bots with specified custom permission integers.</p>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-1 bg-emerald-500/0 group-hover:bg-emerald-500/40 transition-all"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-emerald-500/0 group-hover:bg-emerald-500/50 transition-all duration-300"></div>
                 </a>
 
-                <!-- Project: Logger Webhook -->
-                <a href="tools/source_archive.html" class="group relative bg-zinc-950/50 border border-emerald-500/20 p-8 hover:border-emerald-400/50 transition-all preserve-3d">
+                <a href="tools/source_archive.html" class="group relative bg-zinc-950/30 border border-emerald-500/10 p-8 hover:border-emerald-500/40 hover:bg-emerald-950/5 transition-all duration-300 preserve-3d">
                     <div class="inner-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <i class="fa-solid fa-code text-2xl text-emerald-500/40 group-hover:text-emerald-400"></i>
-                            <span class="text-[9px] text-slate-700 font-bold font-mono">OBJ_005</span>
+                        <div class="flex justify-between items-center mb-6">
+                            <i class="fa-solid fa-code text-xl text-emerald-500/30 group-hover:text-emerald-400 transition-colors"></i>
+                            <span class="text-[9px] text-zinc-700 font-bold tracking-widest">SYS_005</span>
                         </div>
-                        <h4 class="text-sm font-bold tracking-widest text-white mb-3 uppercase">Logger_Webhook</h4>
-                        <p class="text-[10px] text-slate-500 leading-relaxed uppercase">For science: an audit of how IP addresses can be logged via webhooks.</p>
+                        <h4 class="text-sm font-bold tracking-widest text-zinc-100 mb-2 uppercase group-hover:text-emerald-400 transition-colors">Logger_Webhook</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors">An analytical audit demonstrating how source requests map network IP targets via webhooks.</p>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-1 bg-emerald-500/0 group-hover:bg-emerald-500/40 transition-all"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-emerald-500/0 group-hover:bg-emerald-500/50 transition-all duration-300"></div>
                 </a>
 
-                <!-- Project: Image CSS -->
-                <a href="tools/itcss.html" class="group relative bg-zinc-950/50 border border-pink-500/20 p-8 hover:border-pink-400/50 transition-all preserve-3d">
+                <a href="tools/itcss.html" class="group relative bg-zinc-950/30 border border-pink-500/10 p-8 hover:border-pink-400/40 hover:bg-pink-950/5 transition-all duration-300 preserve-3d">
                     <div class="inner-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <i class="fa-solid fa-file-code text-2xl text-pink-500/40 group-hover:text-pink-400"></i>
-                            <span class="text-[9px] text-slate-700 font-bold font-mono">OBJ_006</span>
+                        <div class="flex justify-between items-center mb-6">
+                            <i class="fa-solid fa-file-code text-xl text-pink-500/30 group-hover:text-pink-400 transition-colors"></i>
+                            <span class="text-[9px] text-zinc-700 font-bold tracking-widest">SYS_006</span>
                         </div>
-                        <h4 class="text-sm font-bold tracking-widest text-white mb-3 uppercase">Image_CSS</h4>
-                        <p class="text-[10px] text-slate-500 leading-relaxed uppercase">Replacing traditional visual assets with optimized, code-based styling.</p>
+                        <h4 class="text-sm font-bold tracking-widest text-zinc-100 mb-2 uppercase group-hover:text-pink-400 transition-colors">Image_CSS</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors">Abstracting traditional heavy visual assets into highly optimized, modular CSS properties.</p>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-1 bg-pink-500/0 group-hover:bg-pink-500/40 transition-all"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-pink-500/0 group-hover:bg-pink-500/50 transition-all duration-300"></div>
                 </a>
 
-                <!-- Project: Last War Map -->
-                <a href="tools/lastwar.html" class="group relative bg-zinc-950/50 border border-amber-500/20 p-8 hover:border-amber-400/50 transition-all preserve-3d">
+                <a href="tools/lastwar.html" class="group relative bg-zinc-950/30 border border-amber-500/10 p-8 hover:border-amber-400/40 hover:bg-amber-950/5 transition-all duration-300 preserve-3d">
                     <div class="inner-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <i class="fa-solid fa-map-location-dot text-2xl text-amber-500/40 group-hover:text-amber-400"></i>
-                            <span class="text-[9px] text-slate-700 font-bold font-mono">OBJ_007</span>
+                        <div class="flex justify-between items-center mb-6">
+                            <i class="fa-solid fa-map-location-dot text-xl text-amber-500/30 group-hover:text-amber-400 transition-colors"></i>
+                            <span class="text-[9px] text-zinc-700 font-bold tracking-widest">SYS_007</span>
                         </div>
-                        <h4 class="text-sm font-bold tracking-widest text-white mb-3 uppercase">Last_War_Map</h4>
-                        <p class="text-[10px] text-slate-500 leading-relaxed uppercase">Strategic drawing board for Last War Survival mobile units.</p>
+                        <h4 class="text-sm font-bold tracking-widest text-zinc-100 mb-2 uppercase group-hover:text-amber-400 transition-colors">Last_War_Map</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors">Strategic tactical grid overlay engineered to plot movements for server survival operations.</p>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-1 bg-amber-500/0 group-hover:bg-amber-500/40 transition-all"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-amber-500/0 group-hover:bg-amber-500/50 transition-all duration-300"></div>
                 </a>
 
-                <!-- Project: QR Gen -->
-                <a href="tools/qrcode.html" class="group relative bg-zinc-950/50 border border-white/20 p-8 hover:border-white/50 transition-all preserve-3d">
+                <a href="tools/qrcode.html" class="group relative bg-zinc-950/30 border border-zinc-500/10 p-8 hover:border-zinc-400 hover:bg-zinc-900/10 transition-all duration-300 preserve-3d">
                     <div class="inner-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <i class="fa-solid fa-qrcode text-2xl text-slate-500 group-hover:text-white"></i>
-                            <span class="text-[9px] text-slate-700 font-bold font-mono">OBJ_008</span>
+                        <div class="flex justify-between items-center mb-6">
+                            <i class="fa-solid fa-qrcode text-xl text-zinc-500/40 group-hover:text-zinc-200 transition-colors"></i>
+                            <span class="text-[9px] text-zinc-700 font-bold tracking-widest">SYS_008</span>
                         </div>
-                        <h4 class="text-sm font-bold tracking-widest text-white mb-3 uppercase">QR_Generator</h4>
-                        <p class="text-[10px] text-slate-500 leading-relaxed uppercase">Rapid encryption of URLs into scannable QR data.</p>
+                        <h4 class="text-sm font-bold tracking-widest text-zinc-100 mb-2 uppercase group-hover:text-white transition-colors">QR_Generator</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors">Rapid clientside string transformations into scannable matrix barcodes instantly.</p>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-1 bg-white/0 group-hover:bg-white/40 transition-all"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-white/0 group-hover:bg-white/50 transition-all duration-300"></div>
                 </a>
 
-                <!-- Project: PokeGo Calc -->
-                <a href="tools/pokego-distance-calc.html" class="group relative bg-zinc-950/50 border border-emerald-500/20 p-8 hover:border-emerald-400/50 transition-all preserve-3d">
+                <a href="tools/pokego-distance-calc.html" class="group relative bg-zinc-950/30 border border-emerald-500/10 p-8 hover:border-emerald-400/40 hover:bg-emerald-950/5 transition-all duration-300 preserve-3d">
                     <div class="inner-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <i class="fa-solid fa-location-crosshairs text-2xl text-emerald-500/40 group-hover:text-emerald-400"></i>
-                            <span class="text-[9px] text-slate-700 font-bold font-mono">OBJ_009</span>
+                        <div class="flex justify-between items-center mb-6">
+                            <i class="fa-solid fa-location-crosshairs text-xl text-emerald-500/30 group-hover:text-emerald-400 transition-colors"></i>
+                            <span class="text-[9px] text-zinc-700 font-bold tracking-widest">SYS_009</span>
                         </div>
-                        <h4 class="text-sm font-bold tracking-widest text-white mb-3 uppercase">Poke_Calc</h4>
-                        <p class="text-[10px] text-slate-500 leading-relaxed uppercase">Cooldown and distance calculator designed for PokeGo spoofers.</p>
+                        <h4 class="text-sm font-bold tracking-widest text-zinc-100 mb-2 uppercase group-hover:text-emerald-400 transition-colors">Poke_Calc</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors">Telemetry calculator mapping distance coordinates to estimate strict action cooldown timers.</p>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-1 bg-emerald-500/0 group-hover:bg-emerald-500/40 transition-all"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-emerald-500/0 group-hover:bg-emerald-500/50 transition-all duration-300"></div>
                 </a>
 
-                <!-- Project: Glep Unit -->
-                <a href="glep.html" class="group relative bg-zinc-950/50 border border-emerald-500/20 p-8 hover:border-emerald-400/50 transition-all lg:col-span-3 preserve-3d">
-                    <div class="inner-content flex flex-col md:flex-row items-center gap-8">
-                        <div class="flex-shrink-0">
-                            <i class="fa-solid fa-robot text-4xl text-emerald-500/40 group-hover:text-emerald-400"></i>
+                <a href="glep.html" class="group relative bg-zinc-950/30 border border-emerald-500/10 p-8 hover:border-emerald-500/40 hover:bg-emerald-950/5 transition-all duration-300 lg:col-span-3 preserve-3d">
+                    <div class="inner-content flex flex-col md:flex-row items-start md:items-center gap-6">
+                        <div class="p-3 bg-emerald-950/10 border border-emerald-500/10 group-hover:border-emerald-500/30 transition-colors">
+                            <i class="fa-solid fa-robot text-3xl text-emerald-500/40 group-hover:text-emerald-400 transition-colors"></i>
                         </div>
-                        <div>
-                            <h4 class="text-sm font-bold tracking-widest text-white mb-3 uppercase">Glep_0100</h4>
-                            <p class="text-[10px] text-slate-500 leading-relaxed uppercase">Glep's command directives, Terms of Service, and Privacy Policy protocols.</p>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold tracking-widest text-zinc-100 mb-2 uppercase group-hover:text-emerald-400 transition-colors">Glep_0100</h4>
+                            <p class="text-[11px] text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors">Central runtime node command directives, system rules, Terms of Service, and compliance protocols.</p>
                         </div>
-                        <span class="ml-auto text-[9px] text-slate-700 font-bold font-mono hidden md:block">CORE_UNIT</span>
+                        <span class="text-[9px] text-zinc-700 font-bold tracking-widest self-end md:self-auto">CORE_UNIT</span>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-1 bg-emerald-500/0 group-hover:bg-emerald-500/40 transition-all"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-emerald-500/0 group-hover:bg-emerald-500/50 transition-all duration-300"></div>
                 </a>
 
             </div>
         </main>
 
-        <!-- FOOTER WITH DISCLOSURES -->
-        <footer class="mt-24 pt-10 border-t border-emerald-500/10 max-w-4xl mx-auto">
-            <div class="grid grid-cols-1 gap-8 text-[10px] tracking-widest leading-relaxed uppercase">
-                <div class="space-y-2">
-                    <p class="text-emerald-500/60 font-bold">// 01_DEVELOPMENT</p>
-                    <p class="text-slate-500">The projects and tools hosted on this page are currently in a development/beta stage. While they are functional, you may encounter occasional bugs or performance issues. These tools are provided "as-is" for demonstration and testing purposes. If you encounter any issues or have suggestions, please feel free to reach out via the contact section or submit an issue on the relevant repository.</p>
+        <footer class="mt-32 pt-12 border-t border-emerald-500/10 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-[11px] tracking-wide leading-relaxed">
+                <div class="space-y-3">
+                    <p class="text-emerald-500/50 font-bold tracking-widest">// 01_DEVELOPMENT</p>
+                    <p class="text-slate-500">Hosted utilities are actively in static development staging. Interfaces are provided "as-is" for audit and proof-of-concept processing.</p>
                 </div>
 
-                <div class="space-y-2">
-                    <p class="text-emerald-500/60 font-bold">// 02_USAGE</p>
-                    <p class="text-slate-400 italic font-bold">
-                        &gt; Only use network or OSINT tools on systems and data you have explicit permission to audit.
-                    </p>
-                    <p class="text-slate-500">Ensure your use of these tools complies with your local laws and the Terms of Service of any third party platforms (such as Discord, GitHub, or hosting providers).</p>
+                <div class="space-y-3">
+                    <p class="text-emerald-500/50 font-bold tracking-widest">// 02_USAGE</p>
+                    <p class="text-slate-500">Execute infrastructure analysis tools exclusively against target systems under your explicit administrative domain permissions.</p>
                 </div>
 
-                <div class="space-y-2">
-                    <p class="text-emerald-500/60 font-bold">// 03_PRIVACY</p>
-                    <p class="text-slate-500">I do not use invasive tracking cookies or third-party advertising also no personal information from visitors is been collected.</p>
+                <div class="space-y-3">
+                    <p class="text-emerald-500/50 font-bold tracking-widest">// 03_PRIVACY</p>
+                    <p class="text-slate-500">Zero active trackers. Zero analytic cookies. No personal user variables are intercepted, transferred, or cached.</p>
                 </div>
             </div>
 
-           <div class="mt-16 flex justify-center">
-    <a href="tools/deployment-guide.html" style="text-decoration: none;">
-        <div class="text-[10px] text-slate-800 tracking-[0.4em] font-bold uppercase border border-slate-900 px-4 py-1" style="cursor: pointer;">
-            Notes
-        </div>
-    </a>
-</div>
+            <div class="mt-20 flex justify-center">
+                <a href="tools/deployment-guide.html" class="inline-block group/btn">
+                    <div class="text-[10px] text-zinc-500 group-hover/btn:text-emerald-400 tracking-[0.4em] font-bold uppercase border border-zinc-900 group-hover/btn:border-emerald-500/30 px-6 py-2 transition-all duration-300 bg-zinc-950/20">
+                        [ VIEW_SYSTEM_NOTES ]
+                    </div>
+                </a>
+            </div>
         </footer>
 
     </div>
 
-    <!-- SCRIPT FOR TILT -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
     <script>
         VanillaTilt.init(document.querySelectorAll(".group"), {
-            max: 8,
-            speed: 300,
+            max: 6, 
+            speed: 400,
             glare: true,
-            "max-glare": 0.15,
+            "max-glare": 0.1,
         });
     </script>
 </body>
